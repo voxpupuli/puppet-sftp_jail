@@ -1,8 +1,4 @@
-# == Class sftp_jail::params
-#
-# This class is meant to be called from sftp_jail.
-# It sets variables according to platform.
-#
+# private
 class sftp_jail::params {
   case $::osfamily {
     'Debian': {
