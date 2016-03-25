@@ -11,14 +11,14 @@
 #   e.g. "Specify one or more upstream ntp servers as an array."
 #
 class sftp_jail (
-  $chroot_base  = '/chroot',
+  $chroot_base = '/chroot',
 ) inherits ::sftp_jail::params {
-  include ssh
+  include ::ssh
 
   # validate parameters here
   validate_string($chroot_base)
 
-  file {$chroot_base:
+  file { $chroot_base:
     ensure => 'directory',
     owner  => 'root',
     group  => 'root',
