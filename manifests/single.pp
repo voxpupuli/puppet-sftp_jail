@@ -7,7 +7,7 @@ define sftp_jail::single (
   include ::sftp_jail
 
   $jail_base = "${::sftp_jail::chroot_base}/${jail_name}"
-  file {$jail_base:
+  file { $jail_base:
     ensure  => 'directory',
     owner   => 'root',
     group   => 'root',
@@ -15,7 +15,7 @@ define sftp_jail::single (
     require => File[$::sftp_jail::chroot_base],
   }
 
-  file {"${jail_base}/incoming":
+  file { "${jail_base}/incoming":
     ensure  => 'directory',
     owner   => $jail_user,
     group   => $jail_group,
@@ -23,7 +23,7 @@ define sftp_jail::single (
     require => File[$::sftp_jail::chroot_base],
   }
 
-  file {"${jail_base}/home":
+  file { "${jail_base}/home":
     ensure  => 'directory',
     owner   => $jail_user,
     group   => $jail_group,
@@ -31,7 +31,7 @@ define sftp_jail::single (
     require => File[$::sftp_jail::chroot_base],
   }
 
-  file {"${jail_base}/home/${jail_user}":
+  file { "${jail_base}/home/${jail_user}":
     ensure  => 'directory',
     owner   => $jail_user,
     group   => $jail_group,

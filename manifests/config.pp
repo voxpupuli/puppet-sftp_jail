@@ -1,6 +1,3 @@
-# == Class sftp_jail::config
-#
-# This class is called from sftp_jail for service config.
-#
+# private
 class sftp_jail::config {
 }
