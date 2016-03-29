@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'sftp_jail::single', :type => :define do
+describe 'sftp_jail::jail', :type => :define do
   let :pre_condition do
     'include ssh'
   end
@@ -21,7 +21,7 @@ describe 'sftp_jail::single', :type => :define do
   end
   let :params do
     {
-      :jail_user  => 'bob',
+      :write_user  => 'bob',
       :jail_group => 'bob',
     }
   end
@@ -40,15 +40,15 @@ describe 'sftp_jail::single', :type => :define do
       'ensure' => 'directory',
       'owner'  => 'bob',
       'group'  => 'bob',
-      'mode'   => '0775',
+      'mode'   => '0755',
     })
   end
   it 'manages a home directory' do
     is_expected.to contain_file('/chroot/test/home').with({
       'ensure' => 'directory',
-      'owner'  => 'bob',
-      'group'  => 'bob',
-      'mode'   => '0775',
+      'owner'  => 'root',
+      'group'  => 'root',
+      'mode'   => '0755',
     })
   end
   it 'manages a users home directory' do
@@ -56,7 +56,7 @@ describe 'sftp_jail::single', :type => :define do
       'ensure' => 'directory',
       'owner'  => 'bob',
       'group'  => 'bob',
-      'mode'   => '0775',
+      'mode'   => '0755',
     })
   end
   it 'adds an ssh server entry for the user' do
