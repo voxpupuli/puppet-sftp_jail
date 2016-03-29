@@ -28,8 +28,8 @@ describe 'basic sftp_jail' do
       command => 'rm -f /root/.ssh/id_rsa; ssh-keygen -t rsa -f /root/.ssh/id_rsa -N "" && chmod 0400 /root/.ssh/id_rsa && cat /root/.ssh/id_rsa.pub >> /home/bob/.ssh/authorized_keys',
       path    => '/bin:/usr/bin',
     } ->
-    sftp_jail::single { 'testing':
-      jail_user  => 'bob',
+    sftp_jail::jail { 'testing':
+      write_user  => 'bob',
       jail_group => 'bob',
     }
     EOS
