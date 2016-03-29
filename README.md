@@ -1,4 +1,4 @@
-# local_user
+# sftp_jail
 
 [![Build Status](https://travis-ci.org/bbriggs/puppet-sftp_jail.png?branch=master)](https://travis-ci.org/bbriggs/puppet-sftp_jail)
 
