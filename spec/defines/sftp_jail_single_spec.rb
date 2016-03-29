@@ -18,14 +18,42 @@ describe 'sftp_jail::single', :type => :define do
   end
   describe "compiles" do
     let :title do
-      'some_jail'
+      'test'
     end
     let :params do
       {
-        :jail_user  => 'test',
-        :jail_group => 'test',
+        :jail_user  => 'bob',
+        :jail_group => 'bob',
       }
     end
     it { is_expected.to compile }
+    it { is_expected.to contain_class('sftp_jail') }
+    it do
+      is_expected.to contain_file('/chroot/test/').with({
+        'ensure' => 'directory',
+        'owner'  => 'root',
+        'group'  => 'root',
+        'mode'   => '0755',
+      })
+      is_expected.to contain_file('/chroot/test/incoming').with({
+        'ensure' => 'directory',
+        'owner'  => 'bob',
+        'group'  => 'bob',
+        'mode'   => '0775',
+     })
+      is_expected.to contain_file('/chroot/test/home').with({
+        'ensure' => 'directory',
+        'owner'  => 'bob',
+        'group'  => 'bob',
+        'mode'   => '0775',
+      })
+      is_expected.to contain_file('/chroot/test/home/bob').with({
+        'ensure' => 'directory',
+        'owner'  => 'bob',
+        'group'  => 'bob',
+        'mode'   => '0775',
+      })
+      is_expected.to create_ssh__server__match_block('bob')
+    end
   end
 end

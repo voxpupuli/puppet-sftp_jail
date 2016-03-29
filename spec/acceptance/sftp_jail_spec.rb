@@ -35,8 +35,25 @@ describe 'basic sftp_jail' do
     EOS
     apply_manifest(pp, :catch_failures => true)
   end
+
   it 'uploads file normally' do
     shell('(echo progress; echo "cd /incoming"; echo "put /etc/passwd"; echo quit)|sftp -o StrictHostKeyChecking=no -b - bob@localhost',
           :acceptable_exit_codes => 0)
+  end
+  describe file('/chroot/testing/incoming/passwd') do
+    it { should be_file }
+    it { should be_owned_by 'bob' }
+  end
+  describe file('/chroot/testing/incoming') do
+    it { should be_directory }
+  end
+
+  it 'uploads file to invalid location' do
+    shell('(echo progress; echo "cd /tmp"; echo "puet /etc/passwd"; echo quit)|sftp -o StrictHostKeyChecking=no -b - bob@localhost',
+          :acceptable_exit_codes => 1)
+  end
+
+  describe file('/tmp/passwd') do
+    it { should_not exist }
   end
 end
