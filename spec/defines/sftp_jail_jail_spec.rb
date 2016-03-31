@@ -23,7 +23,7 @@ describe 'sftp_jail::jail', :type => :define do
     {
       :user        => 'bob',
       :group       => 'bob',
-      :match_group => 'bob',
+      :match_group => 'sftpuser',
     }
   end
   it { is_expected.to compile }
@@ -61,7 +61,7 @@ describe 'sftp_jail::jail', :type => :define do
     })
   end
   it 'adds an ssh server entry for the user' do
-    is_expected.to contain_ssh__server__match_block('bob').with({
+    is_expected.to contain_ssh__server__match_block('sftpuser').with({
       'type' => 'Group',
       'options' => {
         'ChrootDirectory'        => '/chroot/test',

@@ -37,10 +37,9 @@ define sftp_jail::user (
   $jail =  undef,
   ) {
   file { "${jail}/home/${user}":
-    ensure  => 'directory',
-    owner   => $user,
-    group   => $group,
-    mode    => '0755',
-    require => File["${jail}/home"],
+    ensure => 'directory',
+    owner  => $user,
+    group  => $group,
+    mode   => '0755',
   }
 }
