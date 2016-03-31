@@ -1,11 +1,24 @@
 define sftp_jail::jail (
   $jail_name               = $name,
-  $write_user              = undef,
-  $jail_group              = undef,
+  $user                    = undef,
+  $group                   = undef,
+  $match_group             = undef,
   $password_authentication = 'no',
   ) {
   include ::sftp_jail
   $jail_base = "${::sftp_jail::chroot_base}/${jail_name}"
+
+  if ($match_group) {
+    $ssh_match_group = $match_group
+  }
+  else {
+    $ssh_match_group = $group
+  }
+
+  if !($group) {
+    $group = $user
+  }
+
   file { $jail_base:
     ensure  => 'directory',
     owner   => 'root',
@@ -16,8 +29,8 @@ define sftp_jail::jail (
 
   file { "${jail_base}/incoming":
     ensure  => 'directory',
-    owner   => $write_user,
-    group   => $jail_group,
+    owner   => $user,
+    group   => $group,
     mode    => '0755',
     require => File[$::sftp_jail::chroot_base],
   }
@@ -30,15 +43,15 @@ define sftp_jail::jail (
     require => File[$::sftp_jail::chroot_base],
   }
 
-  file { "${jail_base}/home/${write_user}":
+  file { "${jail_base}/home/${user}":
     ensure  => 'directory',
-    owner   => $write_user,
-    group   => $jail_group,
+    owner   => $user,
+    group   => $group,
     mode    => '0755',
     require => File["${jail_base}/home"],
   }
 
-  ssh::server::match_block { $jail_group:
+  ssh::server::match_block { $ssh_match_group:
     type    => 'Group',
     options => {
       'ChrootDirectory'        => $jail_base,

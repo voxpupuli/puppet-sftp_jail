@@ -1,16 +1,29 @@
 require 'spec_helper_acceptance'
 
-describe 'basic sftp_jail' do
+describe 'basic and shared SFTP jails' do
   it 'sets up the defaults' do
     pp = <<-EOS
-    $users = ['alice','bob','carol','dave','frank','harold','ian']
-    group { $users:
+    group { ['alice','bob','carol','dave','shared1']:
       ensure => 'present',
     } ->
-    user { $users:
+    # Single-user jail accounts
+    user { ['alice','bob']:
       ensure     => present,
       managehome => true,
-    }
+    } ->
+    # Shared jail users
+    user { 'carol':
+      ensure     => 'present',
+      managehome => true,
+      gid        => 'shared1',
+      groups     => ['carol'],
+    } ->
+    user { 'dave':
+      ensure     => 'present',
+      managehome => 'true',
+      gid        => 'shared1',
+      groups     => ['dave'],
+    } ->
     file {'/root/.ssh/id_rsa':
       ensure => 'present',
       owner  => 'root',
@@ -64,67 +77,100 @@ NE5OgEXk2wVfZczCZpigBKbKZHNYcelXtTt/nP3rsCuGcM4h53s=
       type => 'ssh-rsa',
       key  => 'AAAAB3NzaC1yc2EAAAABIwAAAQEA6NF8iallvQVp22WDkTkyrtvp9eWW6A8YVr+kz4TjGYe7gHzIw+niNltGEFHzD8+v1I2YJ6oXevct1YeS0o9HZyN1Q9qgCgzUFtdOKLv6IedplqoPkcmF0aYet2PkEDo3MlTBckFXPITAMzF8dJSIFo9D8HfdOV0IAdx4O7PtixWKn5y2hMNG0zQPyUecp4pzC6kivAIhyfHilFR61RGL+GPXQ2MWZWFYbAGjyiYJnAmCP3NOTd0jMZEnDkbUvxhMmBYSdETk1rRgm+R4LOzFUGaHqHDLKLX+FIPKcF96hrucXzcWyLbIbEgE98OHlnVYCzRdK8jlqm8tehUc9c9WhQ==',
     } ->
-    ssh_authorized_key {'root@frank':
-      user => 'frank',
-      type => 'ssh-rsa',
-      key  => 'AAAAB3NzaC1yc2EAAAABIwAAAQEA6NF8iallvQVp22WDkTkyrtvp9eWW6A8YVr+kz4TjGYe7gHzIw+niNltGEFHzD8+v1I2YJ6oXevct1YeS0o9HZyN1Q9qgCgzUFtdOKLv6IedplqoPkcmF0aYet2PkEDo3MlTBckFXPITAMzF8dJSIFo9D8HfdOV0IAdx4O7PtixWKn5y2hMNG0zQPyUecp4pzC6kivAIhyfHilFR61RGL+GPXQ2MWZWFYbAGjyiYJnAmCP3NOTd0jMZEnDkbUvxhMmBYSdETk1rRgm+R4LOzFUGaHqHDLKLX+FIPKcF96hrucXzcWyLbIbEgE98OHlnVYCzRdK8jlqm8tehUc9c9WhQ==',
-    } ->
-    ssh_authorized_key {'root@harold':
-      user => 'harold',
-      type => 'ssh-rsa',
-      key  => 'AAAAB3NzaC1yc2EAAAABIwAAAQEA6NF8iallvQVp22WDkTkyrtvp9eWW6A8YVr+kz4TjGYe7gHzIw+niNltGEFHzD8+v1I2YJ6oXevct1YeS0o9HZyN1Q9qgCgzUFtdOKLv6IedplqoPkcmF0aYet2PkEDo3MlTBckFXPITAMzF8dJSIFo9D8HfdOV0IAdx4O7PtixWKn5y2hMNG0zQPyUecp4pzC6kivAIhyfHilFR61RGL+GPXQ2MWZWFYbAGjyiYJnAmCP3NOTd0jMZEnDkbUvxhMmBYSdETk1rRgm+R4LOzFUGaHqHDLKLX+FIPKcF96hrucXzcWyLbIbEgE98OHlnVYCzRdK8jlqm8tehUc9c9WhQ==',
-    } ->
-    ssh_authorized_key {'root@ian':
-      user => 'ian',
-      type => 'ssh-rsa',
-      key  => 'AAAAB3NzaC1yc2EAAAABIwAAAQEA6NF8iallvQVp22WDkTkyrtvp9eWW6A8YVr+kz4TjGYe7gHzIw+niNltGEFHzD8+v1I2YJ6oXevct1YeS0o9HZyN1Q9qgCgzUFtdOKLv6IedplqoPkcmF0aYet2PkEDo3MlTBckFXPITAMzF8dJSIFo9D8HfdOV0IAdx4O7PtixWKn5y2hMNG0zQPyUecp4pzC6kivAIhyfHilFR61RGL+GPXQ2MWZWFYbAGjyiYJnAmCP3NOTd0jMZEnDkbUvxhMmBYSdETk1rRgm+R4LOzFUGaHqHDLKLX+FIPKcF96hrucXzcWyLbIbEgE98OHlnVYCzRdK8jlqm8tehUc9c9WhQ==',
-    } ->
     sftp_jail::jail { 'test1':
-      write_user  => 'alice',
-      jail_group  => 'alice',
+      user   => 'alice',
+      group  => 'alice',
     } ->
     sftp_jail::jail { 'test2':
-      write_user => 'bob',
-      jail_group => 'bob',
+      user  => 'bob',
+      group => 'bob',
     } ->
     sftp_jail::jail { 'shared1':
-       write_user  => 'carol',
-       jail_group  => 'carol',
+      user  => 'carol',
+      group => 'carol',
+      match_group => 'shared1',
     } ->
     sftp_jail::user { 'dave':
-       jail => '/chroot/shared1',
-    } ->
-    sftp_jail::jail { 'shared2':
-      write_user => 'frank',
-      jail_group => 'frank',
-    } ->
-    sftp_jail::user { 'harold':
-      jail => '/chroot/shared2',
-    } ->
-    sftp_jail::user {  'ian':
-      jail => '/chroot/shared2',
-    }
+       jail  => '/chroot/shared1',
+       group => 'dave'
+     }
     EOS
     apply_manifest(pp, :catch_failures => true)
   end
 
-  it 'uploads file normally' do
+  describe file('/chroot/test1') do
+    it { should be_directory }
+    it { should be_owned_by 'root' }
+  end
+  describe file('/chroot/test1/incoming') do
+    it { should be_directory }
+    it { should be_owned_by 'alice' }
+  end
+  describe file('/chroot/test1/home') do
+    it { should be_directory }
+    it { should be_owned_by 'root' }
+  end
+  describe file('/chroot/test1/home/alice') do
+    it { should be_directory }
+    it { should be_owned_by 'alice' }
+  end
+
+  it 'performs normal file upload to single user jail' do
     shell('(echo progress; echo "cd /incoming"; echo "put /etc/passwd"; echo quit)|sftp -o StrictHostKeyChecking=no -b - alice@localhost',
-          :acceptable_exit_codes => 0)
+      :acceptable_exit_codes => 0)
   end
   describe file('/chroot/test1/incoming/passwd') do
     it { should be_file }
     it { should be_owned_by 'alice' }
   end
-  describe file('/chroot/test1/incoming') do
-    it { should be_directory }
+
+  it 'uploads file to second single jail' do
+    shell('(echo progress; echo "cd /incoming"; echo "put /etc/passwd"; echo quit)|sftp -o StrictHostKeyChecking=no -b - bob@localhost',
+          :acceptable_exit_codes => 0)
+  end
+  describe file('/chroot/test2/incoming/passwd') do
+    it { should be_file }
+    it { should be_owned_by 'bob' }
   end
 
   it 'uploads file to invalid location' do
-    shell('(echo progress; echo "cd /tmp"; echo "puet /etc/passwd"; echo quit)|sftp -o StrictHostKeyChecking=no -b - bob@localhost',
-          :acceptable_exit_codes => 1)
+    shell('(echo progress; echo "cd /tmp"; echo "put /etc/passwd"; echo quit)|sftp -o StrictHostKeyChecking=no -b - bob@localhost',
+      :acceptable_exit_codes => 1)
+  end
+  describe file('/tmp/passwd') do
+    it { should_not exist }
   end
 
+  it 'uploads file to first shared jail' do
+    shell('(echo progress; echo "cd /incoming"; echo "put /etc/passwd"; echo quit)|sftp -o StrictHostKeyChecking=no -b - carol@localhost',
+      :acceptable_exit_codes => 0)
+  end
+  describe file('/chroot/shared1/incoming/passwd') do
+    it { should be_file }
+    it { should be_owned_by 'carol' }
+  end
+
+  it 'pulls file from first shared jail as write user' do
+    shell('(echo progress; echo "cd /incoming"; echo "get passwd"; echo quit)|sftp -o StrictHostKeyChecking=no -b - carol@localhost',
+          :acceptable_exit_codes => 0)
+  end
+  it 'pulls file from first shared jail as read user' do
+    shell('(echo progress; echo "cd /incoming"; echo "get passwd"; echo quit)|sftp -o StrictHostKeyChecking=no -b - dave@localhost',
+          :acceptable_exit_codes => 0)
+  end
+  it 'attempts to delete file without group write permission' do
+    shell('su -  dave -c "rm -f /chroot/shared1/incoming/passwd"',
+      :acceptable_exit_codes => 1)
+  end
+
+  it 'attempts to escape shared jail as write user' do
+    shell('(echo progress; echo "cd /tmp"; echo "put /etc/passwd"; echo quit)|sftp -o StrictHostKeyChecking=no -b - carol@localhost',
+          :acceptable_exit_codes => 1)
+  end
+  it 'attempts to esacape shared jail as read-only user' do
+    shell('(echo progress; echo "cd /tmp"; echo "put /etc/passwd"; echo quit)|sftp -o StrictHostKeyChecking=no -b - dave@localhost',
+          :acceptable_exit_codes => 1)
+  end
   describe file('/tmp/passwd') do
     it { should_not exist }
   end
