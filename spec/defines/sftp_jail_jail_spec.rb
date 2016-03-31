@@ -21,8 +21,9 @@ describe 'sftp_jail::jail', :type => :define do
   end
   let :params do
     {
-      :write_user  => 'bob',
-      :jail_group => 'bob',
+      :user        => 'bob',
+      :group       => 'bob',
+      :match_group => 'bob',
     }
   end
   it { is_expected.to compile }
