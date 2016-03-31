@@ -12,7 +12,6 @@
 3. [Parameters](#parameters)
     * [Jail](#jail)
     * [User](#user)
-## Overview
 
 This module leverages saz-ssh to more easily create a robust-ier SFTP jail. 
 Because of how SSH key pairs work in Linux, this module creates a home dir for each jail user, so that keys can be added to `authorized_keys` and a homedir assigned without the nasty problem of the user escaping from the jail and landing in `/` because of a mistaken homedir assignment. 
@@ -23,7 +22,7 @@ Because of how SSH key pairs work in Linux, this module creates a home dir for e
 
 #### Single user
 
-The `sftp_jail::jail` resource creates a jail with a single home directory and an `incoming` directory. ``incoming` is owned by the user and group provided when declaring the resource:
+The `sftp_jail::jail` resource creates a jail with a single home directory and an `incoming` directory. `incoming` is owned by the user and group provided when declaring the resource:
 
 
 ```puppet
