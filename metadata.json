@@ -1,0 +1,55 @@
+{
+  "name": "wusa-sftp_jail",
+  "version": "0.1.1",
+  "author": "Bren Briggs",
+  "summary": "Leverage saz-ssh module to build SFTP jails",
+  "license": "Apache-2.0",
+  "source": "https://github.com/Wycliffe-USA/puppet-sftp_jail.git",
+  "project_page": "https://github.com/Wycliffe-USA/puppet-sftp_jail",
+  "issues_url": "https://github.com/Wycliffe-USA/puppet-sftp_jail.git",
+  "dependencies": [
+    {
+      "name": "saz/ssh",
+      "version_requirement": ">= 2.5.0 < 3.0.0"
+    },
+    {
+      "name": "puppetlabs/stdlib",
+      "version_requirement": ">=4.1.0"
+    }
+  ],
+  "requirements": [
+    {
+      "name": "puppet",
+      "version_requirement": ">=3.5.0 <5.0.0"
+    }
+  ],
+  "operatingsystem_support": [
+    {
+      "operatingsystem": "RedHat",
+      "operatingsystemrelease": [
+        "6",
+        "7"
+      ]
+    },
+    {
+      "operatingsystem": "CentOS",
+      "operatingsystemrelease": [
+        "6",
+        "7"
+      ]
+    },
+    {
+      "operatingsystem": "Debian",
+      "operatingsystemrelease": [
+        "7"
+      ]
+    },
+    {
+      "operatingsystem": "Ubuntu",
+      "operatingsystemrelease": [
+        "12.04",
+        "14.04"
+      ]
+    }
+  ]
+}
