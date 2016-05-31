@@ -13,7 +13,7 @@
 class sftp_jail (
   $chroot_base = '/chroot',
 ) inherits ::sftp_jail::params {
-  include ::ssh
+  # include ::ssh
 
   # validate parameters here
   validate_string($chroot_base)
