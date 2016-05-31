@@ -3,6 +3,7 @@ require 'spec_helper_acceptance'
 describe 'basic and shared SFTP jails' do
   it 'sets up the defaults' do
     pp = <<-EOS
+    class {'ssh': } ->
     group { ['alice','bob','carol','dave','shared1']:
       ensure => 'present',
     } ->
