@@ -18,7 +18,7 @@ notifications:
       - "ircs://irc.sithmail.com:6697/#social"
     template:
       - "%{repository} (%{commit}) : %{message} "
-      - "%{Build details: %{build_url}"
+      - "Build details: %{build_url}"
     use_notice: true
     skip_join: true
   email: false
