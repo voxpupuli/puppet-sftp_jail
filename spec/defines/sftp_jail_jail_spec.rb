@@ -6,10 +6,9 @@ describe 'sftp_jail::jail', :type => :define do
   end
   let :facts do
     {
-      :osfamily               => 'Debian',
-      :operatingsystem        => 'Debian',
-      :operatingsystemrelease => '6',
-      :lsbdistcodename        => 'squeeze',
+      :osfamily               => 'redhat',
+      :operatingsystem        => 'centos',
+      :operatingsystemrelease => '6.7',
       :id                     => 'root',
       :concat_basedir         => '/dne',
       :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
