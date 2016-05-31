@@ -13,6 +13,12 @@ matrix:
   - rvm: 1.9.3
     env: PUPPET_GEM_VERSION="~> 3.0"
 notifications:
+  irc:
+    channels:
+      - "ircs://irc.sithmail.com:6697/#social"
+    template:
+      - "%{repository} (%{commit}) : %{message} "
+      - "%{Build details: %{build_url}"
   email: false
   slack:
     secure: o0kV0MUeZX2slm6hjU16bGZCa9g4pYdjeedYHdI7HtyuI5IY2TifTQjI1P8tpQL9BXiuLLl9YjGQy/5QCgVipP0xP4n5MKAng/RCveDVt4lq9BkJ14A+8/x52J44xLjF9A+SPVH9kSIre/Yewx9RA5uga8wwhY8LPPAQ4OONofu1db3zgJU+HMJU0Rrsgj+JuU71m5D5gn2rEBIQgcs63T6vxKoEAXHnjXU9nN/oCO+kSE3GCDi6JU3iv9OZde9PBFfBRUk5P8gnTD3ap4lUY+5fbQpeNue3tZpP37E/DLb4ehS5BLHzHLFqVyKrzISXkMy/8E6GCDXw6LBVuWHI6uJMmY/+w549dJzx7CC4olcEiOsRtQEQawqEWjSbh3vDnoxs5PrQ+6kCt/nh7umC6vxWf1vs2YActla02/mQEGWTUNFbVW8IKwDAFijLFl1Bqj0Z3c5eIMYjBykaTyYDYBls9+KoidM0HsBTI81XHmSQEKG6Y6jmsHAa8bwfVAOy+XA6m77oZJoz8zwCz3/LD5CfDXGQ4DO/Xpmv53Nwa9W5TFZ74LLxzyJITAalvEeLxpp8cs3voTiKGMtoZAtR5ZfUzBhwXQEDV1ZLyfqHfm8ZeUc/zIn0JLmDHgDBEfcAn3fGA+/O7Udyi6HBUfxAFPWR6ZOycuy3mn2WDl1wsTs=
