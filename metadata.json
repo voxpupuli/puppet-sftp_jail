@@ -1,6 +1,6 @@
 {
   "name": "wusa-sftp_jail",
-  "version": "0.1.2",
+  "version": "0.1.4",
   "author": "Bren Briggs",
   "summary": "Leverage saz-ssh module to build SFTP jails",
   "license": "Apache-2.0",
