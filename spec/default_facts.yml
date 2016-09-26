@@ -9,3 +9,4 @@ sshrsakey: "AAABBBCCC"
 sshecdsakey: "AAABBBCCC"
 sshed25519key: "AAABBBCCC"
 ipaddress6_eth0: "fe80::aaaa:bbbb:cccc:dddd"
+interfaces: 'eth0'
