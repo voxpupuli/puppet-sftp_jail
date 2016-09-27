@@ -1,5 +1,5 @@
 {
-  "name": "wusa-sftp_jail",
+  "name": "puppet-sftp_jail",
   "version": "1.0.0",
   "author": "Vox Pupuli",
   "summary": "Leverage saz-ssh module to build SFTP jails",
