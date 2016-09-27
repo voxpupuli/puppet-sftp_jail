@@ -1,6 +1,6 @@
 # sftp_jail
 
-[![Build Status](https://travis-ci.org/Wycliffe-USA/puppet-sftp_jail.png?branch=master)](https://travis-ci.org/Wycliffe-USA/puppet-sftp_jail)
+[![Build Status](https://travis-ci.org/voxpupuli/puppet-sftp_jail.png?branch=master)](https://travis-ci.org/voxpupuli/puppet-sftp_jail)
 
 #### Table of Contents
 

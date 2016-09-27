@@ -1,18 +1,52 @@
+---
 sudo: false
 language: ruby
 cache: bundler
-bundler_args: "--without system_tests"
-script: bundle exec rake validate lint spec
+bundler_args: --without system_tests development
+before_install:
+  - bundle -v
+  - rm Gemfile.lock || true
+  - gem update --system
+  - gem update bundler
+  - gem --version
+  - bundle -v
+script:
+  - 'bundle exec rake $CHECK'
 matrix:
   fast_finish: true
   include:
-  - rvm: 2.1.5
-    env: PUPPET_GEM_VERSION="~> 3.0" FUTURE_PARSER="yes"
-  - rvm: 2.1.5
-    env: PUPPET_GEM_VERSION="~> 3.0"
   - rvm: 1.9.3
-    env: PUPPET_GEM_VERSION="~> 3.0"
+    env: PUPPET_VERSION="~> 3.0" STRICT_VARIABLES="yes" CHECK=test
+  - rvm: 1.9.3
+    env: PUPPET_VERSION="~> 3.0" STRICT_VARIABLES="yes" FUTURE_PARSER="yes" CHECK=test
+  - rvm: 2.1.9
+    env: PUPPET_VERSION="~> 3.0" STRICT_VARIABLES="yes" CHECK=test
+  - rvm: 2.1.9
+    env: PUPPET_VERSION="~> 4.0" CHECK=test
+  - rvm: 2.2.5
+    env: PUPPET_VERSION="~> 4.0" CHECK=test
+  - rvm: 2.3.1
+    env: PUPPET_VERSION="~> 4.0" CHECK=build DEPLOY_TO_FORGE=yes
+  - rvm: 2.3.1
+    env: PUPPET_VERSION="~> 4.0" CHECK=rubocop
+  - rvm: 2.3.1
+    env: PUPPET_VERSION="~> 4.0" CHECK=test
+  - rvm: 2.4.0-preview1
+    env: PUPPET_VERSION="~> 4.0" CHECK=test
+  allow_failures:
+    - rvm: 2.4.0-preview1
 notifications:
   email: false
-  slack:
-    secure: o0kV0MUeZX2slm6hjU16bGZCa9g4pYdjeedYHdI7HtyuI5IY2TifTQjI1P8tpQL9BXiuLLl9YjGQy/5QCgVipP0xP4n5MKAng/RCveDVt4lq9BkJ14A+8/x52J44xLjF9A+SPVH9kSIre/Yewx9RA5uga8wwhY8LPPAQ4OONofu1db3zgJU+HMJU0Rrsgj+JuU71m5D5gn2rEBIQgcs63T6vxKoEAXHnjXU9nN/oCO+kSE3GCDi6JU3iv9OZde9PBFfBRUk5P8gnTD3ap4lUY+5fbQpeNue3tZpP37E/DLb4ehS5BLHzHLFqVyKrzISXkMy/8E6GCDXw6LBVuWHI6uJMmY/+w549dJzx7CC4olcEiOsRtQEQawqEWjSbh3vDnoxs5PrQ+6kCt/nh7umC6vxWf1vs2YActla02/mQEGWTUNFbVW8IKwDAFijLFl1Bqj0Z3c5eIMYjBykaTyYDYBls9+KoidM0HsBTI81XHmSQEKG6Y6jmsHAa8bwfVAOy+XA6m77oZJoz8zwCz3/LD5CfDXGQ4DO/Xpmv53Nwa9W5TFZ74LLxzyJITAalvEeLxpp8cs3voTiKGMtoZAtR5ZfUzBhwXQEDV1ZLyfqHfm8ZeUc/zIn0JLmDHgDBEfcAn3fGA+/O7Udyi6HBUfxAFPWR6ZOycuy3mn2WDl1wsTs=
+deploy:
+  provider: puppetforge
+  deploy:
+    branch: ha-bug-puppet-forge
+  user: puppet
+  password:
+    secure: "sbcpJ3QhJOBgMta33UNwnJay1HDxi7fPdYE9vJG1lQtYxOBNPeLgOXvZ0WUoWHlyYQdEVCZeG8qn5sZojpRQEenkO06+dL1B/eH93WinXkVLqglVMVv1/uv6ZymK5h7+lC0Hni4tK+AGSvxhT88PC9j8CUS+r5mRPcVTZCnln9NpkO1JaVMtqTjObakwyx3hljmctR6dOl58Vs6VRBphOJIN0UFZzIkCE3gMAZF4bLpHZxr+jxjwsQkq3w4Xqzm3RDa85+g4pskHkRM9YN9auzfWFPBYvM1qlHRwIXRv6jJL72Mxl3hpC/cNEyenhHNnJ0M6VN+RL62Vfylx2fBqh6trVMyr1vnWfSN06yltITxrf60AM1MATVrdxFh+UFUkTYskF7wenWJA+Wnh/62mS1GZLwe+ad2mSnvBtmbaesJKVK45Zn9l4Y0rtbG2DiP7VqMlXcdkK6XAvcG+Z/t3mfBSkSOSmaReTOe79Llg/7VgNAy8OO+pUp8flA6kj7IshE7JLB3gX1hA8tz1dTOODN0HaWrHPlVcL2NVu2xSo4OS+CisQv/Qlk1H1lHwXEJZE0whcwKEzVcQ+j8/TOEMHokGKLJxjMuascysXdoLxHqoMv0nU1GEDNWtyoSO1Ck66llU3aFwge1sdKxLLcB0yuvBl7UlXMWjjMu+LF4HHXE="
+  on:
+    tags: true
+    # all_branches is required to use tags
+    all_branches: true
+    # Only publish the build marked with "DEPLOY_TO_FORGE"
+    condition: "$DEPLOY_TO_FORGE = yes"

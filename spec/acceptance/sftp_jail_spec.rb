@@ -3,6 +3,7 @@ require 'spec_helper_acceptance'
 describe 'basic and shared SFTP jails' do
   it 'sets up the defaults' do
     pp = <<-EOS
+    class {'ssh': } ->
     group { ['alice','bob','carol','dave','shared1']:
       ensure => 'present',
     } ->
@@ -95,7 +96,7 @@ NE5OgEXk2wVfZczCZpigBKbKZHNYcelXtTt/nP3rsCuGcM4h53s=
        group => 'dave'
      }
     EOS
-    apply_manifest(pp, :catch_failures => true)
+    apply_manifest(pp, catch_failures: true)
   end
 
   describe file('/chroot/test1') do
@@ -117,7 +118,7 @@ NE5OgEXk2wVfZczCZpigBKbKZHNYcelXtTt/nP3rsCuGcM4h53s=
 
   it 'performs normal file upload to single user jail' do
     shell('(echo progress; echo "cd /incoming"; echo "put /etc/passwd"; echo quit)|sftp -o StrictHostKeyChecking=no -b - alice@localhost',
-      :acceptable_exit_codes => 0)
+          acceptable_exit_codes: 0)
   end
   describe file('/chroot/test1/incoming/passwd') do
     it { should be_file }
@@ -126,7 +127,7 @@ NE5OgEXk2wVfZczCZpigBKbKZHNYcelXtTt/nP3rsCuGcM4h53s=
 
   it 'uploads file to second single jail' do
     shell('(echo progress; echo "cd /incoming"; echo "put /etc/passwd"; echo quit)|sftp -o StrictHostKeyChecking=no -b - bob@localhost',
-          :acceptable_exit_codes => 0)
+          acceptable_exit_codes: 0)
   end
   describe file('/chroot/test2/incoming/passwd') do
     it { should be_file }
@@ -135,7 +136,7 @@ NE5OgEXk2wVfZczCZpigBKbKZHNYcelXtTt/nP3rsCuGcM4h53s=
 
   it 'uploads file to invalid location' do
     shell('(echo progress; echo "cd /tmp"; echo "put /etc/passwd"; echo quit)|sftp -o StrictHostKeyChecking=no -b - bob@localhost',
-      :acceptable_exit_codes => 1)
+          acceptable_exit_codes: 1)
   end
   describe file('/tmp/passwd') do
     it { should_not exist }
@@ -143,7 +144,7 @@ NE5OgEXk2wVfZczCZpigBKbKZHNYcelXtTt/nP3rsCuGcM4h53s=
 
   it 'uploads file to first shared jail' do
     shell('(echo progress; echo "cd /incoming"; echo "put /etc/passwd"; echo quit)|sftp -o StrictHostKeyChecking=no -b - carol@localhost',
-      :acceptable_exit_codes => 0)
+          acceptable_exit_codes: 0)
   end
   describe file('/chroot/shared1/incoming/passwd') do
     it { should be_file }
@@ -152,24 +153,24 @@ NE5OgEXk2wVfZczCZpigBKbKZHNYcelXtTt/nP3rsCuGcM4h53s=
 
   it 'pulls file from first shared jail as write user' do
     shell('(echo progress; echo "cd /incoming"; echo "get passwd"; echo quit)|sftp -o StrictHostKeyChecking=no -b - carol@localhost',
-          :acceptable_exit_codes => 0)
+          acceptable_exit_codes: 0)
   end
   it 'pulls file from first shared jail as read user' do
     shell('(echo progress; echo "cd /incoming"; echo "get passwd"; echo quit)|sftp -o StrictHostKeyChecking=no -b - dave@localhost',
-          :acceptable_exit_codes => 0)
+          acceptable_exit_codes: 0)
   end
   it 'attempts to delete file without group write permission' do
     shell('su -  dave -c "rm -f /chroot/shared1/incoming/passwd"',
-      :acceptable_exit_codes => 1)
+          acceptable_exit_codes: 1)
   end
 
   it 'attempts to escape shared jail as write user' do
     shell('(echo progress; echo "cd /tmp"; echo "put /etc/passwd"; echo quit)|sftp -o StrictHostKeyChecking=no -b - carol@localhost',
-          :acceptable_exit_codes => 1)
+          acceptable_exit_codes: 1)
   end
   it 'attempts to esacape shared jail as read-only user' do
     shell('(echo progress; echo "cd /tmp"; echo "put /etc/passwd"; echo quit)|sftp -o StrictHostKeyChecking=no -b - dave@localhost',
-          :acceptable_exit_codes => 1)
+          acceptable_exit_codes: 1)
   end
   describe file('/tmp/passwd') do
     it { should_not exist }

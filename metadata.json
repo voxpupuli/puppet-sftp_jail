@@ -1,12 +1,12 @@
 {
   "name": "wusa-sftp_jail",
-  "version": "0.1.1",
-  "author": "Bren Briggs",
+  "version": "1.0.0",
+  "author": "Vox Pupuli",
   "summary": "Leverage saz-ssh module to build SFTP jails",
   "license": "Apache-2.0",
-  "source": "https://github.com/Wycliffe-USA/puppet-sftp_jail.git",
-  "project_page": "https://github.com/Wycliffe-USA/puppet-sftp_jail",
-  "issues_url": "https://github.com/Wycliffe-USA/puppet-sftp_jail.git",
+  "source": "https://github.com/voxpupuli/puppet-sftp_jail.git",
+  "project_page": "https://github.com/voxpupuli/puppet-sftp_jail",
+  "issues_url": "https://github.com/voxpupuli/puppet-sftp_jail.git",
   "dependencies": [
     {
       "name": "saz/ssh",
