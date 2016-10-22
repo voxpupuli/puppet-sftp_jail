@@ -1,0 +1,8 @@
+---
+sshdsakey: "AAABBBCCC"
+sshrsakey: "AAABBBCCC"
+sshecdsakey: "AAABBBCCC"
+sshed25519key: "AAABBBCCC"
+ipaddress6_eth0: "fe80::aaaa:bbbb:cccc:dddd"
+interfaces: "eth0"
+ipaddress_eth0: "192.168.1.2"
