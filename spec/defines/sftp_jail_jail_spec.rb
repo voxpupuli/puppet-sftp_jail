@@ -22,10 +22,10 @@ describe 'sftp_jail::jail', type: :define do
     it { is_expected.to compile }
     it { is_expected.to contain_class('sftp_jail') }
     it 'manages base folder' do
-      is_expected.to contain_file('/chroot/test/').with('ensure' => 'directory',
-                                                        'owner'  => 'root',
-                                                        'group'  => 'root',
-                                                        'mode'   => '0755')
+      is_expected.to contain_file('/chroot/test').with('ensure' => 'directory',
+                                                       'owner'  => 'root',
+                                                       'group'  => 'root',
+                                                       'mode'   => '0755')
     end
     it 'manages an incoming directory' do
       is_expected.to contain_file('/chroot/test/incoming').with('ensure' => 'directory',
