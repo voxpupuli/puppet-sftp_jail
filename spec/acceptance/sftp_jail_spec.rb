@@ -100,20 +100,20 @@ NE5OgEXk2wVfZczCZpigBKbKZHNYcelXtTt/nP3rsCuGcM4h53s=
   end
 
   describe file('/chroot/test1') do
-    it { should be_directory }
-    it { should be_owned_by 'root' }
+    it { is_expected.to be_directory }
+    it { is_expected.to be_owned_by 'root' }
   end
   describe file('/chroot/test1/incoming') do
-    it { should be_directory }
-    it { should be_owned_by 'alice' }
+    it { is_expected.to be_directory }
+    it { is_expected.to be_owned_by 'alice' }
   end
   describe file('/chroot/test1/home') do
-    it { should be_directory }
-    it { should be_owned_by 'root' }
+    it { is_expected.to be_directory }
+    it { is_expected.to be_owned_by 'root' }
   end
   describe file('/chroot/test1/home/alice') do
-    it { should be_directory }
-    it { should be_owned_by 'alice' }
+    it { is_expected.to be_directory }
+    it { is_expected.to be_owned_by 'alice' }
   end
 
   it 'performs normal file upload to single user jail' do
@@ -121,8 +121,8 @@ NE5OgEXk2wVfZczCZpigBKbKZHNYcelXtTt/nP3rsCuGcM4h53s=
           acceptable_exit_codes: 0)
   end
   describe file('/chroot/test1/incoming/passwd') do
-    it { should be_file }
-    it { should be_owned_by 'alice' }
+    it { is_expected.to be_file }
+    it { is_expected.to be_owned_by 'alice' }
   end
 
   it 'uploads file to second single jail' do
@@ -130,8 +130,8 @@ NE5OgEXk2wVfZczCZpigBKbKZHNYcelXtTt/nP3rsCuGcM4h53s=
           acceptable_exit_codes: 0)
   end
   describe file('/chroot/test2/incoming/passwd') do
-    it { should be_file }
-    it { should be_owned_by 'bob' }
+    it { is_expected.to be_file }
+    it { is_expected.to be_owned_by 'bob' }
   end
 
   it 'uploads file to invalid location' do
@@ -139,7 +139,7 @@ NE5OgEXk2wVfZczCZpigBKbKZHNYcelXtTt/nP3rsCuGcM4h53s=
           acceptable_exit_codes: 1)
   end
   describe file('/tmp/passwd') do
-    it { should_not exist }
+    it { is_expected.not_to exist }
   end
 
   it 'uploads file to first shared jail' do
@@ -147,8 +147,8 @@ NE5OgEXk2wVfZczCZpigBKbKZHNYcelXtTt/nP3rsCuGcM4h53s=
           acceptable_exit_codes: 0)
   end
   describe file('/chroot/shared1/incoming/passwd') do
-    it { should be_file }
-    it { should be_owned_by 'carol' }
+    it { is_expected.to be_file }
+    it { is_expected.to be_owned_by 'carol' }
   end
 
   it 'pulls file from first shared jail as write user' do
@@ -173,6 +173,6 @@ NE5OgEXk2wVfZczCZpigBKbKZHNYcelXtTt/nP3rsCuGcM4h53s=
           acceptable_exit_codes: 1)
   end
   describe file('/tmp/passwd') do
-    it { should_not exist }
+    it { is_expected.not_to exist }
   end
 end
