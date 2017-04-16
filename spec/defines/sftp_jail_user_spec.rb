@@ -24,6 +24,7 @@ describe 'sftp_jail::user', type: :define do
       jail: '/chroot/testjail'
     }
   end
+
   it { is_expected.to compile }
   it 'creates users homedir' do
     is_expected.to contain_file('/chroot/testjail/home/testuser').with('ensure' => 'directory',

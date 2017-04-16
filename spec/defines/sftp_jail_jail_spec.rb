@@ -19,6 +19,7 @@ describe 'sftp_jail::jail', type: :define do
     let :title do
       'test'
     end
+
     it { is_expected.to compile }
     it { is_expected.to contain_class('sftp_jail') }
     it 'manages base folder' do
