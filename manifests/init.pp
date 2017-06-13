@@ -11,11 +11,8 @@
 #   e.g. "Specify one or more upstream ntp servers as an array."
 #
 class sftp_jail (
-  $chroot_base = '/chroot',
+  Stdlib::Absolutepath $chroot_base = '/chroot',
 ) inherits ::sftp_jail::params {
-
-  # validate parameters here
-  validate_string($chroot_base)
 
   file { $chroot_base:
     ensure => 'directory',
