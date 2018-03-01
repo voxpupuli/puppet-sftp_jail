@@ -9,6 +9,7 @@
     * [Examples](#examples)
       * [Single user](#single-user)
       * [Shared jail](#shared-jail)
+      * [Hiera](#hiera)
 3. [Parameters](#parameters)
     * [Jail](#jail)
     * [User](#user)
@@ -52,6 +53,27 @@ Now add a user to your jail.
 ```
 
 To share write access to `/incoming`, set the `group` parameter of `sftp_jail::jail` to a group that is common to both users, such as the `sftpusers` group that you might use to redirect users into a jail.
+
+#### Hiera
+
+```puppet
+---
+classes:
+  - ssh
+  - sftp_jail
+sftp_jail::chroot_base: '/var/test'
+sftp_jail::jail:
+  'sftp':
+    user: 'root'
+    group: 'root'
+    match_group: 'sftpusers'
+    password_authentication: 'yes'
+sftp_jail::user:
+  'user1':
+    user: 'user1'
+    group: 'sftpusers'
+    jail: '/var/test/sftp'
+```
 
 ## Parameters
 
