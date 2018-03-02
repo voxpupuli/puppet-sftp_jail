@@ -14,17 +14,13 @@ class sftp_jail (
   Stdlib::Absolutepath $chroot_base = '/chroot',
 ) inherits ::sftp_jail::params {
 
-# To make sure it creates recursively the directory
   exec { "Create ${chroot_base}":
     creates => $chroot_base,
     command => "/bin/mkdir -p ${chroot_base}",
   } -> file { $chroot_base: #}
-#  file { $chroot_base:
     ensure => 'directory',
     owner  => 'root',
     group  => 'root',
     mode   => '0755',
   }
-create_resources('sftp_jail::user', lookup('sftp_jail::user', {merge => 'deep'}))
-create_resources('sftp_jail::jail', lookup('sftp_jail::jail', {merge => 'deep'}))
 }
