@@ -1,6 +1,6 @@
 {
   "name": "puppet-sftp_jail",
-  "version": "2.0.2",
+  "version": "2.0.3-rc0",
   "author": "Vox Pupuli",
   "summary": "Leverage saz-ssh module to build SFTP jails",
   "license": "Apache-2.0",
