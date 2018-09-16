@@ -31,7 +31,7 @@ define sftp_jail::jail (
     ensure  => 'directory',
     owner   => $user,
     group   => $group,
-    mode    => '0755',
+    mode    => '0775',
     require => File[$::sftp_jail::chroot_base],
   }
 
