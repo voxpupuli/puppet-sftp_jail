@@ -32,7 +32,7 @@ describe 'sftp_jail::jail', type: :define do
       is_expected.to contain_file('/chroot/test/incoming').with('ensure' => 'directory',
                                                                 'owner'  => 'bob',
                                                                 'group'  => 'bob',
-                                                                'mode'   => '0755')
+                                                                'mode'   => '0775')
     end
     it 'manages a home directory' do
       is_expected.to contain_file('/chroot/test/home').with('ensure' => 'directory',
