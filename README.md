@@ -13,8 +13,7 @@
     * [Jail](#jail)
     * [User](#user)
 
-This module leverages saz-ssh to more easily create a more robust-ier SFTP jail. 
-Because of how SSH key pairs work in Linux, this module creates a home dir for each jail user, so that keys can be added to `authorized_keys` and a homedir assigned without the nasty problem of the user escaping from the jail and landing in `/` because of a mistaken homedir assignment. 
+This module leverages saz-ssh to more easily create a more robust-ier SFTP jail. Because of how SSH key pairs work in Linux, this module creates a home dir for each jail user, so that keys can be added to `authorized_keys` and a homedir assigned without the nasty problem of the user escaping from the jail and landing in `/` because of a mistaken homedir assignment.
 
 ## Usage
 
@@ -34,7 +33,7 @@ The `sftp_jail::jail` resource creates a jail with a single home directory and a
 
 #### Shared jail
 
-Sometimes, more than one user will need to access the same jail, but with different permissions. For instance, one may need read-write access while another is limited to read-only. In such a case, first create the jail with your write user and set up a match_group that redirects users. Again, the users and groups must already exist. 
+Sometimes, more than one user will need to access the same jail, but with different permissions. For instance, one may need read-write access while another is limited to read-only. In such a case, first create the jail with your write user and set up a match_group that redirects users. Again, the users and groups must already exist.
 
 ```puppet
     sftp_jail::jail { 'shared_jail':
@@ -43,7 +42,7 @@ Sometimes, more than one user will need to access the same jail, but with differ
       match_group => 'sftpusers',
     }
 ```
-Now add a user to your jail. 
+Now add a user to your jail.
 
 ```puppet
     sftp_jail::user { 'readuser':
@@ -67,18 +66,18 @@ The group that will own the corresponding home directory in the jail, giving the
 
 #### match_group
 
-Set the group that SSHd will look for when redirecting users to the jail. Useful for shared jails. Defaults to the value of `group`. 
+Set the group that SSHd will look for when redirecting users to the jail. Useful for shared jails. Defaults to the value of `group`.
 
 ### User
 
 #### user
 
-The username that will own the corresponding home directory in the jail, giving the user a place to land. Defaults to resource title. 
+The username that will own the corresponding home directory in the jail, giving the user a place to land. Defaults to resource title.
 
 #### group
 
-The group that will own the corresponding home directory in the jail, giving the user a place to land. Defaults to resource title. 
+The group that will own the corresponding home directory in the jail, giving the user a place to land. Defaults to resource title.
 
 #### jail
 
-The path of the jail's base directory, such as `/chroot/myjail`. Do not include a trailing slash. 
+The path of the jail's base directory, such as `/chroot/myjail`. Do not include a trailing slash.

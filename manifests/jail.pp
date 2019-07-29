@@ -5,8 +5,8 @@ define sftp_jail::jail (
   $match_group             = undef,
   $password_authentication = 'no',
   ) {
-  include ::sftp_jail
-  $jail_base = "${::sftp_jail::chroot_base}/${jail_name}"
+  include sftp_jail
+  $jail_base = "${sftp_jail::chroot_base}/${jail_name}"
 
   if ($match_group) {
     $ssh_match_group = $match_group
@@ -24,7 +24,7 @@ define sftp_jail::jail (
     owner   => 'root',
     group   => 'root',
     mode    => '0755',
-    require => File[$::sftp_jail::chroot_base],
+    require => File[$sftp_jail::chroot_base],
   }
 
   file { "${jail_base}/incoming":
@@ -32,7 +32,7 @@ define sftp_jail::jail (
     owner   => $user,
     group   => $group,
     mode    => '0775',
-    require => File[$::sftp_jail::chroot_base],
+    require => File[$sftp_jail::chroot_base],
   }
 
   file { "${jail_base}/home":
@@ -40,7 +40,7 @@ define sftp_jail::jail (
     owner   => 'root',
     group   => 'root',
     mode    => '0755',
-    require => File[$::sftp_jail::chroot_base],
+    require => File[$sftp_jail::chroot_base],
   }
 
   file { "${jail_base}/home/${user}":
