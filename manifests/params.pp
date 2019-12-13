@@ -1,6 +1,6 @@
 # private
 class sftp_jail::params {
-  case $::osfamily {
+  case $facts['os']['family'] {
     'Debian': {
       $package_name = 'sftp_jail'
       $service_name = 'sftp_jail'
@@ -10,7 +10,7 @@ class sftp_jail::params {
       $service_name = 'sftp_jail'
     }
     default: {
-      fail("${::operatingsystem} not supported")
+      fail("${facts['os']['name']} not supported")
     }
   }
 }
