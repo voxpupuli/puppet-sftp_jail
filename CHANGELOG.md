@@ -4,6 +4,29 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v3.0.0](https://github.com/voxpupuli/puppet-sftp_jail/tree/v3.0.0) (2020-04-05)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-sftp_jail/compare/v2.0.2...v3.0.0)
+
+**Breaking changes:**
+
+- drop Puppet 4 / Require Puppet 5.5.8 [\#60](https://github.com/voxpupuli/puppet-sftp_jail/pull/60) ([bastelfreak](https://github.com/bastelfreak))
+
+**Fixed bugs:**
+
+- 0775 permissions for /incoming [\#52](https://github.com/voxpupuli/puppet-sftp_jail/pull/52) ([cogliostro](https://github.com/cogliostro))
+
+**Closed issues:**
+
+- Group permissions for /incoming wrong [\#51](https://github.com/voxpupuli/puppet-sftp_jail/issues/51)
+
+**Merged pull requests:**
+
+- Allow saz/ssh 5.x and 6.x [\#59](https://github.com/voxpupuli/puppet-sftp_jail/pull/59) ([bastelfreak](https://github.com/bastelfreak))
+- Allow puppetlabs/stdlib 6.x [\#57](https://github.com/voxpupuli/puppet-sftp_jail/pull/57) ([dhoppe](https://github.com/dhoppe))
+- Clean up acceptance spec helper [\#54](https://github.com/voxpupuli/puppet-sftp_jail/pull/54) ([ekohl](https://github.com/ekohl))
+- modulesync 2.8.0 and allow puppet 6.x [\#53](https://github.com/voxpupuli/puppet-sftp_jail/pull/53) ([bastelfreak](https://github.com/bastelfreak))
+
 ## [v2.0.2](https://github.com/voxpupuli/puppet-sftp_jail/tree/v2.0.2) (2018-09-09)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-sftp_jail/compare/v2.0.1...v2.0.2)
