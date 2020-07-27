@@ -4,7 +4,7 @@ define sftp_jail::jail (
   $group                   = undef,
   $match_group             = undef,
   $password_authentication = 'no',
-  ) {
+) {
   include sftp_jail
   $jail_base = "${sftp_jail::chroot_base}/${jail_name}"
 
