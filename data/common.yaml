@@ -1,0 +1,4 @@
+---
+sftp_jail::password_authentication:
+  sftp_admins: false
+  sftp_users: false
