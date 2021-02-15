@@ -12,7 +12,7 @@
 #
 class sftp_jail (
   Stdlib::Absolutepath $chroot_base = '/chroot',
-) inherits sftp_jail::params {
+) {
   file { $chroot_base:
     ensure => 'directory',
     owner  => 'root',
