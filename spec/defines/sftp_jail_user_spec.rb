@@ -13,8 +13,7 @@ describe 'sftp_jail::user' do
     }
   end
 
-  # We need Facter 3 facts - it breaks with version 2
-  on_supported_os(facterversion: '3.0.0').each do |os, facts|
+  on_supported_os.each do |os, facts|
     context "on #{os}" do
       let :facts do
         facts
