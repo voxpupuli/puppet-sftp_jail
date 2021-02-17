@@ -46,7 +46,7 @@
 #   Manage the user resource?
 #
 # @param sftp_admin
-#   Is this user an SFTP admin? SFTP Admins can read an probaply write to user
+#   Is this user an SFTP admin? SFTP Admins can read an probably write to user
 #   Data.
 #
 # @param sub_dirs
