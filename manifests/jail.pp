@@ -27,7 +27,7 @@
 #   The users group.
 #
 # @param groups
-#   Additional groups the user should be in. Only usefull for admins.
+#   Additional groups the user should be in. Only useful for admins.
 #
 # @param  passowrd_hash
 #   generate password hash with salt:
