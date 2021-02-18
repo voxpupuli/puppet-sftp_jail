@@ -20,17 +20,21 @@
 #   Default subdirectories to ensure in every admins home. Can be overwritten for
 #   each admin seperatly.
 #
-# @param password_authentication
-#   Password Authentication setting for SFTP users and Admins.
+# @param pw_auth_users
+#   Password Authentication setting for SFTP users.
+#
+# @param pw_auth_admins
+#   Password Authentication setting for SFTP Admins.
 #
 class sftp_jail (
-  Sftp_jail::Sftp_Users    $sftp_users              = {},
-  Stdlib::Absolutepath     $chroot_base             = '/chroot',
-  Boolean                  $manage_users            = false,
-  Sftp_jail::Sub_dirs      $sub_dirs                = [],
-  Boolean                  $merge_subdirs           = false,
-  Sftp_jail::Sub_dirs      $admin_sub_dirs          = [],
-  Sftp_jail::Pw_auth       $password_authentication = {},
+  Sftp_jail::Sftp_Users $sftp_users     = {},
+  Stdlib::Absolutepath  $chroot_base    = '/chroot',
+  Boolean               $manage_users   = false,
+  Sftp_jail::Sub_dirs   $sub_dirs       = [],
+  Boolean               $merge_subdirs  = false,
+  Sftp_jail::Sub_dirs   $admin_sub_dirs = [],
+  Boolean               $pw_auth_users  = false,
+  Boolean               $pw_auth_admins = false,
 ) {
   $sftp_admins = $sftp_users.filter |$k, $v| { $v['sftp_admin'] }
 
@@ -65,12 +69,12 @@ class sftp_jail (
       $options = {
         'sub_dirs' => $admin_sub_dirs,
         'merge_subdirs' => false,
-        'password_authentication' => $password_authentication['sftp_admins'],
+        'password_authentication' => $pw_auth_admins,
       }
     } else {
       $jail_base = undef
       $options = {
-        'password_authentication' => $password_authentication['sftp_users'],
+        'password_authentication' => $pw_auth_users,
       }
     }
 

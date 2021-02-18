@@ -63,8 +63,8 @@
 #   Useful for shared jails. Defaults to the value of group.
 #
 # @param password_authentication
-#   Can the user login with a password? An alternative may be, public key
-#   authentication.
+#   Can the user login with a password? Public key authentication is generally
+#   recommended and has to be configured outside of the scope of this module.
 #
 define sftp_jail::jail (
   Enum['present', 'absent'] $ensure                  = 'present',
