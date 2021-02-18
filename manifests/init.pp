@@ -47,7 +47,6 @@ class sftp_jail (
       owner   => 'root',
       group   => 'root',
       mode    => '0755',
-      require => File[$chroot_base],
     }
     $sftp_user_groups = ($sftp_users - $sftp_admins).filter |$k, $v| {
       $v['ensure'] == 'present'
