@@ -83,7 +83,7 @@ define sftp_jail::jail (
   Boolean                   $merge_subdirs           = false,
   Boolean                   $purge                   = false,
   Accounts::User::Name      $match_group             = $group,
-  Sftp_jail::Jail::Pw_auth  $password_authentication = {},
+  Boolean                   $password_authentication = false,
 ) {
   include sftp_jail
 
@@ -132,9 +132,7 @@ define sftp_jail::jail (
   if $ensure == 'present' {
     $_password_authentication = $password_authentication ? {
       true  => 'yes',
-      'yes' => 'yes',
       false => 'no',
-      'no'  => 'no',
     }
     ssh::server::match_block { $match_group:
       type    => 'Group',
