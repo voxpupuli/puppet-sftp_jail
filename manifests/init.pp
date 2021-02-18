@@ -65,6 +65,8 @@ class sftp_jail (
       $jail_base = $chroot_base
       $sub_dirs = $admin_sub_dirs
       $merge_subdirs = false
+    }else{
+      $jail_base = undef
     }
 
     sftp_jail::jail { default:

@@ -93,6 +93,7 @@ define sftp_jail::jail (
       $force = true
     } else {
       $_ensure = 'directory'
+      $force = undef
     }
     file { default:
         ensure  => $_ensure,

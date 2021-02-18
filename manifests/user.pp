@@ -79,6 +79,7 @@ define sftp_jail::user (
       $force = true
     } else {
       $_ensure = 'directory'
+      $force = undef
     }
 
     unless $sub_dirs == $sftp_jail::sub_dirs {
