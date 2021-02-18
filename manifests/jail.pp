@@ -96,14 +96,13 @@ define sftp_jail::jail (
       $force = undef
     }
     file { default:
-        ensure  => $_ensure,
-        owner   => 'root',
-        group   => 'root',
-        mode    => '0755',
-        force   => $force,
-        require => File[$jail_base],
+        ensure => $_ensure,
+        owner  => 'root',
+        group  => 'root',
+        mode   => '0755',
+        force  => $force,
       ;
-      $jail_base: require => File[$sftp_jail::chroot_base],;
+      $jail_base: ;
       "${jail_base}/home":;
       "${jail_base}/incoming":
         owner => $user,

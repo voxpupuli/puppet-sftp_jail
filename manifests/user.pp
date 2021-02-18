@@ -97,11 +97,8 @@ define sftp_jail::user (
         mode   => '0755',
         force  => $force,
       ;
-      $real_home: require => File["${jail}/home"],
-      ;
-      $merged_sub_dirs.map |$v| { "${real_home}/${v}" }:
-        require => File[$real_home],
-      ;
+      $real_home: ;
+      $merged_sub_dirs.map |$v| { "${real_home}/${v}" }: ;
     }
   }
 
