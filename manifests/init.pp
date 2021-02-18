@@ -62,23 +62,21 @@ class sftp_jail (
   $sftp_users.each |$k, $v| {
     if $v['sftp_admin'] {
       $jail_base = $chroot_base
-      $sub_dirs = $admin_sub_dirs
-      $merge_subdirs = false
-    }else{
+      $options = {
+        'sub_dirs' => $admin_sub_dirs,
+        'merge_subdirs' => false,
+      }
+    } else {
       $jail_base = undef
+      $options = {}
     }
 
-    sftp_jail::jail { default:
-        sub_dirs      => $sub_dirs,
-        merge_subdirs => $merge_subdirs,
-      ;
-      $k:
-        *                       => $v,
+    sftp_jail::jail { $k:
         jail_base               => $jail_base,
         groups                  => $sftp_user_groups,
         manage_user             => $manage_users,
         password_authentication => $password_authentication['sftp_users'],
-      ;
+        *                       => $options + $v,
     }
   }
 }
