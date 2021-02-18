@@ -43,10 +43,10 @@ class sftp_jail (
 
   unless $sftp_admins.empty {
     file { "${chroot_base}/home":
-      ensure  => 'directory',
-      owner   => 'root',
-      group   => 'root',
-      mode    => '0755',
+      ensure => 'directory',
+      owner  => 'root',
+      group  => 'root',
+      mode   => '0755',
     }
     $sftp_user_groups = ($sftp_users - $sftp_admins).filter |$k, $v| {
       $v['ensure'] == 'present'
@@ -65,18 +65,20 @@ class sftp_jail (
       $options = {
         'sub_dirs' => $admin_sub_dirs,
         'merge_subdirs' => false,
+        'password_authentication' => $password_authentication['sftp_admins'],
       }
     } else {
       $jail_base = undef
-      $options = {}
+      $options = {
+        'password_authentication' => $password_authentication['sftp_users'],
+      }
     }
 
     sftp_jail::jail { $k:
-        jail_base               => $jail_base,
-        groups                  => $sftp_user_groups,
-        manage_user             => $manage_users,
-        password_authentication => $password_authentication['sftp_users'],
-        *                       => $options + $v,
+        jail_base   => $jail_base,
+        groups      => $sftp_user_groups,
+        manage_user => $manage_users,
+        *           => $options + $v,
     }
   }
 }
