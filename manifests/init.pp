@@ -74,6 +74,8 @@ class sftp_jail (
     } else {
       $jail_base = undef
       $options = {
+        'sub_dirs' => $sub_dirs,
+        'merge_subdirs' => $merge_subdirs,
         'password_authentication' => $pw_auth_users,
       }
     }
