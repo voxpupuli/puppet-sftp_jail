@@ -55,11 +55,7 @@ class sftp_jail (
     $sftp_user_groups = ($sftp_users - $sftp_admins).filter |$k, $v| {
       $v['ensure'] == 'present'
     }.map |$k, $v| {
-      if $v['group'] {
-        $v['group']
-      } else {
-        $k
-      }
+      pick($v['group'], $k)
     }
   }
 
