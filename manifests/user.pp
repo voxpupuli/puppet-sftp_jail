@@ -103,12 +103,7 @@ define sftp_jail::user (
   }
 
   if $manage_user {
-    $full_comment= "${comment} SFTP only ${
-      $sftp_admin ? {
-        true    => 'admin',
-        default => 'user',
-      }
-    }"
+    $full_comment= "${comment} SFTP only ${bool2str($sftp_admin, 'admin', 'user')}"
 
     accounts::user { $user:
       ensure     => $ensure,
