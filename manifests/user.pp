@@ -90,15 +90,15 @@ define sftp_jail::user (
     } else {
       $merged_sub_dirs = $sub_dirs
     }
-    file { default:
-        ensure => $_ensure,
-        owner  => $user,
-        group  => $group,
-        mode   => '0755',
-        force  => $force,
-      ;
-      $real_home: ;
-      $merged_sub_dirs.map |$v| { "${real_home}/${v}" }: ;
+    $directories = [$real_home] + $merged_sub_dirs.map |$v| {
+      "${real_home}/${v}"
+    }
+    file { $directories:
+      ensure => $_ensure,
+      owner  => $user,
+      group  => $group,
+      mode   => '0755',
+      force  => $force,
     }
   }
 
