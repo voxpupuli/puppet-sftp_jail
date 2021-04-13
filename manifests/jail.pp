@@ -129,16 +129,12 @@ define sftp_jail::jail (
   }
 
   if $ensure == 'present' {
-    $_password_authentication = $password_authentication ? {
-      true  => 'yes',
-      false => 'no',
-    }
     ssh::server::match_block { $match_group:
       type    => 'Group',
       options => {
         'ChrootDirectory'        => $jail_base,
         'ForceCommand'           => 'internal-sftp',
-        'PasswordAuthentication' => $_password_authentication,
+        'PasswordAuthentication' => bool2str($password_authentication, 'yes', 'no'),
         'AllowTcpForwarding'     => 'no',
         'X11Forwarding'          => 'no',
       },
