@@ -51,10 +51,10 @@
 #   recommended and has to be configured outside of the scope of this module.
 #
 define sftp_jail::jail (
-  $jail_name                                 = $name,
-  $user                                      = $name,
-  $group                                     = $user,
-  $match_group                               = $group,
+  Sftp_jail::File_name $jail_name            = $name,
+  Sftp_jail::User_name $user                 = $name,
+  Sftp_jail::User_name $group                = $user,
+  Sftp_jail::User_name $match_group          = $group,
   Enum['yes', 'no'] $password_authentication = $sftp_jail::password_authentication,
 ) {
   include sftp_jail

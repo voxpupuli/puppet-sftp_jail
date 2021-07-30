@@ -13,6 +13,11 @@
 * [`sftp_jail::jail`](#sftp_jailjail): One SFTP Jail where users get "chrooted" into
 * [`sftp_jail::user`](#sftp_jailuser): Adds a user's home directory to an SFTP jail.
 
+### Data types
+
+* [`Sftp_jail::File_name`](#sftp_jailfile_name): The name of a file. Not a full path!
+* [`Sftp_jail::User_name`](#sftp_jailuser_name): Each user or group should have a unique alphanumeric name.
+
 ## Classes
 
 ### <a name="sftp_jail"></a>`sftp_jail`
@@ -98,7 +103,7 @@ The following parameters are available in the `sftp_jail::jail` defined type:
 
 ##### <a name="jail_name"></a>`jail_name`
 
-Data type: `Any`
+Data type: `Sftp_jail::File_name`
 
 The jails name.
 
@@ -106,7 +111,7 @@ Default value: `$name`
 
 ##### <a name="user"></a>`user`
 
-Data type: `Any`
+Data type: `Sftp_jail::User_name`
 
 The user that will own the corresponding home directory in the jail, giving
 the user a place to land. Also sets user ownership for `/incoming`.
@@ -115,7 +120,7 @@ Default value: `$name`
 
 ##### <a name="group"></a>`group`
 
-Data type: `Any`
+Data type: `Sftp_jail::User_name`
 
 The group that will own the corresponding home directory in the jail,
 giving the user a place to land. Also sets group ownership for `/incoming`.
@@ -124,7 +129,7 @@ Default value: `$user`
 
 ##### <a name="match_group"></a>`match_group`
 
-Data type: `Any`
+Data type: `Sftp_jail::User_name`
 
 Set the group that SSHd will look for when redirecting users to the jail.
 Useful for shared jails. Defaults to the value of `group`.
@@ -174,14 +179,14 @@ The following parameters are available in the `sftp_jail::user` defined type:
 
 ##### <a name="jail"></a>`jail`
 
-Data type: `Any`
+Data type: `Stdlib::Absolutepath`
 
 The path of the jail's base directory, such as `/chroot/myjail`. Do not
 include a trailing slash.
 
 ##### <a name="user"></a>`user`
 
-Data type: `Any`
+Data type: `Sftp_jail::User_name`
 
 The username that will own the corresponding home directory in the jail,
 giving the user a place to land.
@@ -190,9 +195,37 @@ Default value: `$name`
 
 ##### <a name="group"></a>`group`
 
-Data type: `Any`
+Data type: `Sftp_jail::User_name`
 
 The group that will own the corresponding home directory in the jail.
 
 Default value: `$user`
+
+## Data types
+
+### <a name="sftp_jailfile_name"></a>`Sftp_jail::File_name`
+
+The name of a file. Not a full path!
+
+Alias of
+
+```puppet
+Pattern[/\A[^\/\0]+\z/]
+```
+
+### <a name="sftp_jailuser_name"></a>`Sftp_jail::User_name`
+
+From useradd(8): It is usually recommended to only use usernames
+that begin with a lower case letter or an underscore, followed by lower case
+letters, digits, underscores, or dashes. They can end with a dollar sign.
+Usernames may only be up to 32 characters long.
+
+Many installations also allow capitals or periods, for example to separate
+first and last names.
+
+Alias of
+
+```puppet
+Pattern[/\A[a-zA-Z_]([a-zA-Z.0-9_-]{0,30}[a-zA-Z0-9_$-])?\z/]
+```
 
