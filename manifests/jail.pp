@@ -51,10 +51,10 @@
 #   recommended and has to be configured outside of the scope of this module.
 #
 define sftp_jail::jail (
-          $jail_name               = $name,
-          $user                    = undef,
-          $group                   = undef,
-          $match_group             = undef,
+  $jail_name               = $name,
+  $user                    = undef,
+  $group                   = undef,
+  $match_group             = undef,
   Boolean $password_authentication = $sftp_jail::password_authentication,
 ) {
   include sftp_jail
