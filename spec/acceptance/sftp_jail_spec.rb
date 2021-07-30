@@ -4,6 +4,7 @@ describe 'basic and shared SFTP jails' do
   it 'sets up the defaults' do
     pp = <<-EOS
       class {'ssh': } ->
+      class {'sftp_jail': } ->
       group { ['alice','bob','carol','dave','shared1']:
         ensure => 'present',
       } ->

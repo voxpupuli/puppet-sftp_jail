@@ -24,6 +24,7 @@ Manage SFTP Jails
 The following parameters are available in the `sftp_jail` class:
 
 * [`chroot_base`](#chroot_base)
+* [`password_authentication`](#password_authentication)
 
 ##### <a name="chroot_base"></a>`chroot_base`
 
@@ -32,6 +33,15 @@ Data type: `Stdlib::Absolutepath`
 All jails are located in this directory.
 
 Default value: `'/chroot'`
+
+##### <a name="password_authentication"></a>`password_authentication`
+
+Data type: `Enum['yes', 'no']`
+
+Default Password Authentication setting for SFTP jails. This will only
+impact SFTP users which are put in a chroot jail by this module.
+
+Default value: `'no'`
 
 ## Defined types
 
@@ -123,11 +133,12 @@ Default value: `$group`
 
 ##### <a name="password_authentication"></a>`password_authentication`
 
-Data type: `Any`
+Data type: `Enum['yes', 'no']`
 
-OpenSSH Password Authentication
+Can the user login with a password? Public key authentication is generally
+recommended and has to be configured outside of the scope of this module.
 
-Default value: `'no'`
+Default value: `$sftp_jail::password_authentication`
 
 ### <a name="sftp_jailuser"></a>`sftp_jail::user`
 

@@ -7,7 +7,7 @@ describe 'sftp_jail::jail' do
         facts
       end
       let :pre_condition do
-        'include ssh'
+        'include ssh, sftp_jail'
       end
       let :params do
         {
