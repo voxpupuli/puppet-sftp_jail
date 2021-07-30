@@ -60,12 +60,11 @@ define sftp_jail::jail (
   include sftp_jail
   $jail_base = "${sftp_jail::chroot_base}/${jail_name}"
 
-  file { $jail_base:
-    ensure  => 'directory',
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0755',
-    require => File[$sftp_jail::chroot_base],
+  file { [$jail_base, "${jail_base}/home"]:
+    ensure => 'directory',
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0755',
   }
 
   file { "${jail_base}/incoming":
@@ -73,14 +72,6 @@ define sftp_jail::jail (
     owner   => $user,
     group   => $group,
     mode    => '0775',
-    require => File[$sftp_jail::chroot_base],
-  }
-
-  file { "${jail_base}/home":
-    ensure  => 'directory',
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0755',
     require => File[$sftp_jail::chroot_base],
   }
 
