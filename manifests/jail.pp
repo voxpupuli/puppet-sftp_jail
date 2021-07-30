@@ -53,23 +53,12 @@
 define sftp_jail::jail (
   $jail_name               = $name,
   $user                    = undef,
-  $group                   = undef,
-  $match_group             = undef,
+  $group                   = $user,
+  $match_group             = $group,
   Boolean $password_authentication = $sftp_jail::password_authentication,
 ) {
   include sftp_jail
   $jail_base = "${sftp_jail::chroot_base}/${jail_name}"
-
-  if ($match_group) {
-    $ssh_match_group = $match_group
-  }
-  else {
-    $ssh_match_group = $group
-  }
-
-  if !($group) {
-    $group = $user
-  }
 
   file { $jail_base:
     ensure  => 'directory',
@@ -103,7 +92,7 @@ define sftp_jail::jail (
     require => File["${jail_base}/home"],
   }
 
-  ssh::server::match_block { $ssh_match_group:
+  ssh::server::match_block { $match_group:
     type    => 'Group',
     options => {
       'ChrootDirectory'        => $jail_base,
