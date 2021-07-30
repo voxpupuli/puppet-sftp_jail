@@ -47,14 +47,15 @@
 #   Useful for shared jails. Defaults to the value of `group`.
 #
 # @param password_authentication
-#   OpenSSH Password Authentication
+#   Can the user login with a password? Public key authentication is generally
+#   recommended and has to be configured outside of the scope of this module.
 #
 define sftp_jail::jail (
-  $jail_name               = $name,
-  $user                    = undef,
-  $group                   = undef,
-  $match_group             = undef,
-  $password_authentication = 'no',
+          $jail_name               = $name,
+          $user                    = undef,
+          $group                   = undef,
+          $match_group             = undef,
+  Boolean $password_authentication = false,
 ) {
   include sftp_jail
   $jail_base = "${sftp_jail::chroot_base}/${jail_name}"
@@ -107,7 +108,7 @@ define sftp_jail::jail (
     options => {
       'ChrootDirectory'        => $jail_base,
       'ForceCommand'           => 'internal-sftp',
-      'PasswordAuthentication' => $password_authentication,
+      'PasswordAuthentication' => bool2str($password_authentication, 'yes', 'no'),
       'AllowTcpForwarding'     => 'no',
       'X11Forwarding'          => 'no',
     },
