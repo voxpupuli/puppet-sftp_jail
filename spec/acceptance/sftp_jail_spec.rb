@@ -12,6 +12,11 @@ describe 'basic and shared SFTP jails' do
         ensure     => present,
         managehome => true,
       } ->
+      # Single-user jail accounts without managehome
+      user { 'matz':
+        ensure     => present,
+        managehome => false,
+      } ->
       # Shared jail users
       user { 'carol':
         ensure     => 'present',
@@ -68,6 +73,11 @@ NE5OgEXk2wVfZczCZpigBKbKZHNYcelXtTt/nP3rsCuGcM4h53s=
         type => 'ssh-rsa',
         key  => 'AAAAB3NzaC1yc2EAAAABIwAAAQEA6NF8iallvQVp22WDkTkyrtvp9eWW6A8YVr+kz4TjGYe7gHzIw+niNltGEFHzD8+v1I2YJ6oXevct1YeS0o9HZyN1Q9qgCgzUFtdOKLv6IedplqoPkcmF0aYet2PkEDo3MlTBckFXPITAMzF8dJSIFo9D8HfdOV0IAdx4O7PtixWKn5y2hMNG0zQPyUecp4pzC6kivAIhyfHilFR61RGL+GPXQ2MWZWFYbAGjyiYJnAmCP3NOTd0jMZEnDkbUvxhMmBYSdETk1rRgm+R4LOzFUGaHqHDLKLX+FIPKcF96hrucXzcWyLbIbEgE98OHlnVYCzRdK8jlqm8tehUc9c9WhQ==',
       } ->
+      ssh_authorized_key {'root@matz':
+        user => 'matz',
+        type => 'ssh-rsa',
+        key  => 'AAAAB3NzaC1yc2EAAAABIwAAAQEA6NF8iallvQVp22WDkTkyrtvp9eWW6A8YVr+kz4TjGYe7gHzIw+niNltGEFHzD8+v1I2YJ6oXevct1YeS0o9HZyN1Q9qgCgzUFtdOKLv6IedplqoPkcmF0aYet2PkEDo3MlTBckFXPITAMzF8dJSIFo9D8HfdOV0IAdx4O7PtixWKn5y2hMNG0zQPyUecp4pzC6kivAIhyfHilFR61RGL+GPXQ2MWZWFYbAGjyiYJnAmCP3NOTd0jMZEnDkbUvxhMmBYSdETk1rRgm+R4LOzFUGaHqHDLKLX+FIPKcF96hrucXzcWyLbIbEgE98OHlnVYCzRdK8jlqm8tehUc9c9WhQ==',
+      } ->
       ssh_authorized_key {'root@carol':
         user => 'carol',
         type => 'ssh-rsa',
@@ -85,6 +95,10 @@ NE5OgEXk2wVfZczCZpigBKbKZHNYcelXtTt/nP3rsCuGcM4h53s=
       sftp_jail::jail { 'test2':
         user  => 'bob',
         group => 'bob',
+      } ->
+      sftp_jail::jail { 'test3':
+        user  => 'matz',
+        group => 'matz',
       } ->
       sftp_jail::jail { 'shared1':
         user  => 'carol',
@@ -115,6 +129,10 @@ NE5OgEXk2wVfZczCZpigBKbKZHNYcelXtTt/nP3rsCuGcM4h53s=
     it { is_expected.to be_directory }
     it { is_expected.to be_owned_by 'alice' }
   end
+  describe file('/chroot/test3/home/matz') do
+    it { is_expected.to be_directory }
+    it { is_expected.to be_owned_by 'matz' }
+  end
 
   it 'performs normal file upload to single user jail' do
     shell('(echo progress; echo "cd /incoming"; echo "put /etc/passwd"; echo quit)|sftp -o StrictHostKeyChecking=no -b - alice@localhost',
@@ -132,6 +150,15 @@ NE5OgEXk2wVfZczCZpigBKbKZHNYcelXtTt/nP3rsCuGcM4h53s=
   describe file('/chroot/test2/incoming/passwd') do
     it { is_expected.to be_file }
     it { is_expected.to be_owned_by 'bob' }
+  end
+
+  it 'performs normal file upload to single user jail without managehome' do
+    shell('(echo progress; echo "cd /incoming"; echo "put /etc/passwd"; echo quit)|sftp -o StrictHostKeyChecking=no -b - matz@localhost',
+          acceptable_exit_codes: 0)
+  end
+  describe file('/chroot/test3/incoming/passwd') do
+    it { is_expected.to be_file }
+    it { is_expected.to be_owned_by 'matz' }
   end
 
   it 'uploads file to invalid location' do
