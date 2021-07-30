@@ -25,12 +25,30 @@
 # @param group
 #   The group that will own the corresponding home directory in the jail.
 #
+# @param sub_dirs
+#   This directory structure is enforced in the users Home.
+#
+# @param merge_subdirs
+#   Merge sub_dirs with the default sub_dirs?
+#
 define sftp_jail::user (
   Stdlib::Absolutepath $jail,
-  Sftp_jail::User_name $user  = $name,
-  Sftp_jail::User_name $group = $user,
+  Sftp_jail::User_name $user          = $name,
+  Sftp_jail::User_name $group         = $user,
+  Sftp_jail::Sub_dirs  $sub_dirs      = $sftp_jail::sub_dirs,
+  Boolean              $merge_subdirs = $sftp_jail::merge_subdirs,
 ) {
-  file { "${jail}/home/${user}":
+  $home = "${jail}/home/${user}"
+
+  $merged_sub_dirs = $merge_subdirs ? {
+    true    => unique($sftp_jail::sub_dirs + $sub_dirs),
+    default => $sub_dirs,
+  }
+  $directories = [$home] + $merged_sub_dirs.map |$v| {
+    "${home}/${v}"
+  }
+
+  file { $directories:
     ensure => 'directory',
     owner  => $user,
     group  => $group,

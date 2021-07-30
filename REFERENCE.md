@@ -16,6 +16,7 @@
 ### Data types
 
 * [`Sftp_jail::File_name`](#sftp_jailfile_name): The name of a file. Not a full path!
+* [`Sftp_jail::Sub_dirs`](#sftp_jailsub_dirs): A list of subdirectories
 * [`Sftp_jail::User_name`](#sftp_jailuser_name): Each user or group should have a unique alphanumeric name.
 
 ## Classes
@@ -29,6 +30,8 @@ Manage SFTP Jails
 The following parameters are available in the `sftp_jail` class:
 
 * [`chroot_base`](#chroot_base)
+* [`sub_dirs`](#sub_dirs)
+* [`merge_subdirs`](#merge_subdirs)
 * [`password_authentication`](#password_authentication)
 
 ##### <a name="chroot_base"></a>`chroot_base`
@@ -38,6 +41,27 @@ Data type: `Stdlib::Absolutepath`
 All jails are located in this directory.
 
 Default value: `'/chroot'`
+
+##### <a name="sub_dirs"></a>`sub_dirs`
+
+Data type: `Sftp_jail::Sub_dirs`
+
+A list of default subdirectories to ensure in every SFTP users home. Having a
+default list of subdirectories is especially usefull, when a lot of users
+need to have the exact same directory structure in there home. This list
+can be overwritten or extended for each user seperatly.
+see: `sftp_jail::merge_subdirs`
+
+Default value: `[]`
+
+##### <a name="merge_subdirs"></a>`merge_subdirs`
+
+Data type: `Boolean`
+
+Merge  each users list of subdirectories (`sftp_jail::user::sub_dirs`)
+with the default list of subdirectories (`sftp_jail::sub_dirs`)?
+
+Default value: ``false``
 
 ##### <a name="password_authentication"></a>`password_authentication`
 
@@ -98,6 +122,8 @@ The following parameters are available in the `sftp_jail::jail` defined type:
 * [`jail_name`](#jail_name)
 * [`user`](#user)
 * [`group`](#group)
+* [`sub_dirs`](#sub_dirs)
+* [`merge_subdirs`](#merge_subdirs)
 * [`match_group`](#match_group)
 * [`password_authentication`](#password_authentication)
 
@@ -126,6 +152,22 @@ The group that will own the corresponding home directory in the jail,
 giving the user a place to land. Also sets group ownership for `/incoming`.
 
 Default value: `$user`
+
+##### <a name="sub_dirs"></a>`sub_dirs`
+
+Data type: `Sftp_jail::Sub_dirs`
+
+This directory structure is enforced in the users Home.
+
+Default value: `$sftp_jail::sub_dirs`
+
+##### <a name="merge_subdirs"></a>`merge_subdirs`
+
+Data type: `Boolean`
+
+Merge sub_dirs with the default sub_dirs?
+
+Default value: `$sftp_jail::merge_subdirs`
 
 ##### <a name="match_group"></a>`match_group`
 
@@ -176,6 +218,8 @@ The following parameters are available in the `sftp_jail::user` defined type:
 * [`jail`](#jail)
 * [`user`](#user)
 * [`group`](#group)
+* [`sub_dirs`](#sub_dirs)
+* [`merge_subdirs`](#merge_subdirs)
 
 ##### <a name="jail"></a>`jail`
 
@@ -201,6 +245,22 @@ The group that will own the corresponding home directory in the jail.
 
 Default value: `$user`
 
+##### <a name="sub_dirs"></a>`sub_dirs`
+
+Data type: `Sftp_jail::Sub_dirs`
+
+This directory structure is enforced in the users Home.
+
+Default value: `$sftp_jail::sub_dirs`
+
+##### <a name="merge_subdirs"></a>`merge_subdirs`
+
+Data type: `Boolean`
+
+Merge sub_dirs with the default sub_dirs?
+
+Default value: `$sftp_jail::merge_subdirs`
+
 ## Data types
 
 ### <a name="sftp_jailfile_name"></a>`Sftp_jail::File_name`
@@ -211,6 +271,24 @@ Alias of
 
 ```puppet
 Pattern[/\A[^\/\0]+\z/]
+```
+
+### <a name="sftp_jailsub_dirs"></a>`Sftp_jail::Sub_dirs`
+
+A list of subdirectories
+
+#### Examples
+
+##### A valid subdirectory
+
+```puppet
+As!8df/[1qwEr/zXcv0'
+```
+
+Alias of
+
+```puppet
+Array[Pattern[/\A([^\/\0]+\/*)*\z/]]
 ```
 
 ### <a name="sftp_jailuser_name"></a>`Sftp_jail::User_name`

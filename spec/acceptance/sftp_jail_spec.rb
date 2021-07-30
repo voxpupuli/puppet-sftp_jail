@@ -84,8 +84,9 @@ NE5OgEXk2wVfZczCZpigBKbKZHNYcelXtTt/nP3rsCuGcM4h53s=
         group  => 'alice',
       } ->
       sftp_jail::jail { 'test2':
-        user  => 'bob',
-        group => 'bob',
+        user     => 'bob',
+        group    => 'bob',
+        sub_dirs => ['a', 'a/b'],
       } ->
       sftp_jail::jail { 'shared1':
         user  => 'carol',
@@ -116,6 +117,14 @@ NE5OgEXk2wVfZczCZpigBKbKZHNYcelXtTt/nP3rsCuGcM4h53s=
     it { is_expected.to be_directory }
     it { is_expected.to be_owned_by 'alice' }
   end
+  describe file('/chroot/test2/home/bob/a') do
+    it { is_expected.to be_directory }
+    it { is_expected.to be_owned_by 'bob' }
+  end
+  describe file('/chroot/test2/home/bob/a/b') do
+    it { is_expected.to be_directory }
+    it { is_expected.to be_owned_by 'bob' }
+  end
 
   it 'performs normal file upload to single user jail' do
     shell('(echo progress; echo "cd /incoming"; echo "put /etc/passwd"; echo quit)|sftp -o StrictHostKeyChecking=no -b - alice@localhost',
@@ -131,6 +140,15 @@ NE5OgEXk2wVfZczCZpigBKbKZHNYcelXtTt/nP3rsCuGcM4h53s=
           acceptable_exit_codes: 0)
   end
   describe file('/chroot/test2/incoming/passwd') do
+    it { is_expected.to be_file }
+    it { is_expected.to be_owned_by 'bob' }
+  end
+
+  it 'uploads file a sub directory' do
+    shell('(echo progress; echo "cd /home/bob/a/b"; echo "put /etc/passwd"; echo quit)|sftp -o StrictHostKeyChecking=no -b - bob@localhost',
+          acceptable_exit_codes: 0)
+  end
+  describe file('/chroot/test2/home/bob/a/b/passwd') do
     it { is_expected.to be_file }
     it { is_expected.to be_owned_by 'bob' }
   end
