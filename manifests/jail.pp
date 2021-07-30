@@ -68,19 +68,17 @@ define sftp_jail::jail (
   }
 
   file { "${jail_base}/incoming":
-    ensure  => 'directory',
-    owner   => $user,
-    group   => $group,
-    mode    => '0775',
-    require => File[$sftp_jail::chroot_base],
+    ensure => 'directory',
+    owner  => $user,
+    group  => $group,
+    mode   => '0775',
   }
 
   file { "${jail_base}/home/${user}":
-    ensure  => 'directory',
-    owner   => $user,
-    group   => $group,
-    mode    => '0755',
-    require => File["${jail_base}/home"],
+    ensure => 'directory',
+    owner  => $user,
+    group  => $group,
+    mode   => '0755',
   }
 
   ssh::server::match_block { $match_group:
