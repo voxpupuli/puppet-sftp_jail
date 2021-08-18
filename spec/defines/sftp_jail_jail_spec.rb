@@ -57,5 +57,37 @@ describe 'sftp_jail::jail' do
                                                                          })
       end
     end
+    
+    context "PasswordAuthentication on #{os}" do
+      let :facts do
+        facts
+      end
+      let :pre_condition do
+        'include ssh, sftp_jail'
+      end
+      let :params do
+        {
+          user: 'alice',
+          group: 'alice',
+          password_authentication: 'yes'
+        }
+      end
+      let :title do
+        'test2'
+      end
+
+      it 'allows PasswordAuthentication for the user alice' do
+        is_expected.to contain_ssh__server__match_block('alice').with(
+          'type' => 'Group',
+          'options' => {
+            'ChrootDirectory'        => '/chroot/test2',
+            'ForceCommand'           => 'internal-sftp',
+            'PasswordAuthentication' => 'yes',
+            'AllowTcpForwarding'     => 'no',
+            'X11Forwarding'          => 'no'
+          }
+        )
+      end
+    end
   end
 end
