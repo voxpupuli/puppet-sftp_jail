@@ -14,6 +14,10 @@
 #     jail  => '/chroot/myjail',
 #   }
 #
+# @param jail
+#   The path of the jail's base directory, such as `/chroot/myjail`. Do not
+#   include a trailing slash.
+#
 # @param user
 #   The username that will own the corresponding home directory in the jail,
 #   giving the user a place to land.
@@ -21,14 +25,10 @@
 # @param group
 #   The group that will own the corresponding home directory in the jail.
 #
-# @param jail
-#   The path of the jail's base directory, such as `/chroot/myjail`. Do not
-#   include a trailing slash.
-#
 define sftp_jail::user (
+  $jail,
   $user  = $name,
   $group = $name,
-  $jail =  undef,
 ) {
   file { "${jail}/home/${user}":
     ensure => 'directory',

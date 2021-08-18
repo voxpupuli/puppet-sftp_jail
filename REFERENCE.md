@@ -157,9 +157,16 @@ sftp_jail::user{'bob':
 
 The following parameters are available in the `sftp_jail::user` defined type:
 
+* [`jail`](#jail)
 * [`user`](#user)
 * [`group`](#group)
-* [`jail`](#jail)
+
+##### <a name="jail"></a>`jail`
+
+Data type: `Any`
+
+The path of the jail's base directory, such as `/chroot/myjail`. Do not
+include a trailing slash.
 
 ##### <a name="user"></a>`user`
 
@@ -177,13 +184,4 @@ Data type: `Any`
 The group that will own the corresponding home directory in the jail.
 
 Default value: `$name`
-
-##### <a name="jail"></a>`jail`
-
-Data type: `Any`
-
-The path of the jail's base directory, such as `/chroot/myjail`. Do not
-include a trailing slash.
-
-Default value: ``undef``
 
