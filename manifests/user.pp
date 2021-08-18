@@ -28,7 +28,7 @@
 define sftp_jail::user (
   $jail,
   $user  = $name,
-  $group = $name,
+  $group = $user,
 ) {
   file { "${jail}/home/${user}":
     ensure => 'directory',
