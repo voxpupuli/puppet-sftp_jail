@@ -110,7 +110,7 @@ Data type: `Any`
 The group that will own the corresponding home directory in the jail,
 giving the user a place to land. Also sets group ownership for `/incoming`.
 
-Default value: ``undef``
+Default value: `$user`
 
 ##### <a name="match_group"></a>`match_group`
 
@@ -119,7 +119,7 @@ Data type: `Any`
 Set the group that SSHd will look for when redirecting users to the jail.
 Useful for shared jails. Defaults to the value of `group`.
 
-Default value: ``undef``
+Default value: `$group`
 
 ##### <a name="password_authentication"></a>`password_authentication`
 
