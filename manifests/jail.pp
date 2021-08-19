@@ -47,14 +47,15 @@
 #   Useful for shared jails. Defaults to the value of `group`.
 #
 # @param password_authentication
-#   OpenSSH Password Authentication
+#   Can the user login with a password? Public key authentication is generally
+#   recommended and has to be configured outside of the scope of this module.
 #
 define sftp_jail::jail (
-  $jail_name               = $name,
-  $user                    = $name,
-  $group                   = $user,
-  $match_group             = $group,
-  $password_authentication = 'no',
+  $jail_name                                 = $name,
+  $user                                      = $name,
+  $group                                     = $user,
+  $match_group                               = $group,
+  Enum['yes', 'no'] $password_authentication = $sftp_jail::password_authentication,
 ) {
   include sftp_jail
   $jail_base = "${sftp_jail::chroot_base}/${jail_name}"
