@@ -26,9 +26,9 @@
 #   The group that will own the corresponding home directory in the jail.
 #
 define sftp_jail::user (
-  $jail,
-  $user  = $name,
-  $group = $user,
+  Stdlib::Absolutepath $jail,
+  Sftp_jail::User_name $user  = $name,
+  Sftp_jail::User_name $group = $user,
 ) {
   file { "${jail}/home/${user}":
     ensure => 'directory',
