@@ -57,7 +57,7 @@ describe 'sftp_jail::jail' do
                                                                          })
       end
     end
-    
+
     context "PasswordAuthentication on #{os}" do
       let :facts do
         facts
