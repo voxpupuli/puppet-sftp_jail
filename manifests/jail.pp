@@ -51,7 +51,7 @@
 #
 define sftp_jail::jail (
   $jail_name               = $name,
-  $user                    = undef,
+  $user                    = $name,
   $group                   = $user,
   $match_group             = $group,
   $password_authentication = 'no',
