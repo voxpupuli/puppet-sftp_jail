@@ -183,5 +183,5 @@ Data type: `Any`
 
 The group that will own the corresponding home directory in the jail.
 
-Default value: `$name`
+Default value: `$user`
 
