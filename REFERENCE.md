@@ -101,7 +101,7 @@ Data type: `Any`
 The user that will own the corresponding home directory in the jail, giving
 the user a place to land. Also sets user ownership for `/incoming`.
 
-Default value: ``undef``
+Default value: `$name`
 
 ##### <a name="group"></a>`group`
 
