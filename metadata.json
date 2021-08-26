@@ -10,7 +10,7 @@
   "dependencies": [
     {
       "name": "saz/ssh",
-      "version_requirement": ">= 2.9.1 < 7.0.0"
+      "version_requirement": ">= 2.9.1 < 8.0.0"
     },
     {
       "name": "puppetlabs/stdlib",
