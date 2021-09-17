@@ -4,7 +4,43 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
-## [v3.0.0](https://github.com/voxpupuli/puppet-sftp_jail/tree/v3.0.0) (2020-04-05)
+## [v4.0.0](https://github.com/voxpupuli/puppet-sftp_jail/tree/v4.0.0) (2021-09-17)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-sftp_jail/compare/v3.0.0...v4.0.0)
+
+**Breaking changes:**
+
+- Drop Puppet 5/Add Puppet 7 support [\#86](https://github.com/voxpupuli/puppet-sftp_jail/pull/86) ([root-expert](https://github.com/root-expert))
+- the owning group of a users home directory defaults to $user, not to $name [\#78](https://github.com/voxpupuli/puppet-sftp_jail/pull/78) ([nod0n](https://github.com/nod0n))
+- Make $sftp\_jail::user::jail a required parameter [\#77](https://github.com/voxpupuli/puppet-sftp_jail/pull/77) ([nod0n](https://github.com/nod0n))
+- Drop EL6 and Ubuntu 14.04, add Ubuntu 18.04 & Debian 10 [\#67](https://github.com/voxpupuli/puppet-sftp_jail/pull/67) ([ekohl](https://github.com/ekohl))
+
+**Implemented enhancements:**
+
+- Add Debian 11 and Ubuntu 20.04 support [\#84](https://github.com/voxpupuli/puppet-sftp_jail/pull/84) ([nod0n](https://github.com/nod0n))
+- validate class and defined resource parameters [\#81](https://github.com/voxpupuli/puppet-sftp_jail/pull/81) ([nod0n](https://github.com/nod0n))
+- Allow jail creation without specifying a user [\#80](https://github.com/voxpupuli/puppet-sftp_jail/pull/80) ([nod0n](https://github.com/nod0n))
+- Add a default password authentication setting [\#74](https://github.com/voxpupuli/puppet-sftp_jail/pull/74) ([nod0n](https://github.com/nod0n))
+- Remove unused files and parameters [\#66](https://github.com/voxpupuli/puppet-sftp_jail/pull/66) ([ekohl](https://github.com/ekohl))
+
+**Closed issues:**
+
+- check debian version [\#42](https://github.com/voxpupuli/puppet-sftp_jail/issues/42)
+- Documentation in init.pp is still boilerplate from the module generate skeleton [\#13](https://github.com/voxpupuli/puppet-sftp_jail/issues/13)
+
+**Merged pull requests:**
+
+- Allow up-to-date dependencies [\#88](https://github.com/voxpupuli/puppet-sftp_jail/pull/88) ([smortex](https://github.com/smortex))
+- move creation of user home from jail.pp to user.pp [\#87](https://github.com/voxpupuli/puppet-sftp_jail/pull/87) ([nod0n](https://github.com/nod0n))
+- Add puppet-lint-param-docs [\#82](https://github.com/voxpupuli/puppet-sftp_jail/pull/82) ([bastelfreak](https://github.com/bastelfreak))
+- Refactor `sftp_jail::jail` file resources [\#76](https://github.com/voxpupuli/puppet-sftp_jail/pull/76) ([nod0n](https://github.com/nod0n))
+- Simplify default values in sftp\_jail::jail [\#75](https://github.com/voxpupuli/puppet-sftp_jail/pull/75) ([nod0n](https://github.com/nod0n))
+- Add a short usage info in readme [\#73](https://github.com/voxpupuli/puppet-sftp_jail/pull/73) ([nod0n](https://github.com/nod0n))
+- Migrate documentation to Puppet strings [\#70](https://github.com/voxpupuli/puppet-sftp_jail/pull/70) ([nod0n](https://github.com/nod0n))
+- hiera.yaml [\#68](https://github.com/voxpupuli/puppet-sftp_jail/pull/68) ([nod0n](https://github.com/nod0n))
+- Use voxpupuli-acceptance [\#62](https://github.com/voxpupuli/puppet-sftp_jail/pull/62) ([ekohl](https://github.com/ekohl))
+
+## [v3.0.0](https://github.com/voxpupuli/puppet-sftp_jail/tree/v3.0.0) (2020-04-06)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-sftp_jail/compare/v2.0.2...v3.0.0)
 
