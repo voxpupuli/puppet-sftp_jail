@@ -74,11 +74,9 @@ define sftp_jail::jail (
     mode   => '0775',
   }
 
-  file { "${jail_base}/home/${user}":
-    ensure => 'directory',
-    owner  => $user,
-    group  => $group,
-    mode   => '0755',
+  sftp_jail::user { $user:
+    jail  => $jail_base,
+    group => $group,
   }
 
   ssh::server::match_block { $match_group:
