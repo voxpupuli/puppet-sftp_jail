@@ -1,5 +1,11 @@
 # @summary Manage SFTP Jails
 #
+# @param jails
+#   Jails to create. See `sftp_jail::jail` for more details.
+#
+# @param users
+#   Users to create. See `sftp_jail::user` for more details.
+#
 # @param chroot_base
 #   All jails are located in this directory.
 #
@@ -19,6 +25,8 @@
 #   impact SFTP users which are put in a chroot jail by this module.
 #
 class sftp_jail (
+  Hash[String[1],Hash] $jails                   = {},
+  Hash[String[1],Hash] $users                   = {},
   Stdlib::Absolutepath $chroot_base             = '/chroot',
   Sftp_jail::Sub_dirs  $sub_dirs                = [],
   Boolean              $merge_subdirs           = false,
@@ -29,5 +37,12 @@ class sftp_jail (
     owner  => 'root',
     group  => 'root',
     mode   => '0755',
+  }
+
+  $jails.each |$jail, $properties| {
+    sftp_jail::jail { $jail: * => $properties }
+  }
+  $users.each |$user, $properties| {
+    sftp_jail::jail { $user: * => $properties }
   }
 }
