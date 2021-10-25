@@ -42,6 +42,12 @@
 #   The group that will own the corresponding home directory in the jail,
 #   giving the user a place to land. Also sets group ownership for `/incoming`.
 #
+# @param sub_dirs
+#   This directory structure is enforced in the users Home.
+#
+# @param merge_subdirs
+#   Merge sub_dirs with the default sub_dirs?
+#
 # @param match_group
 #   Set the group that SSHd will look for when redirecting users to the jail.
 #   Useful for shared jails. Defaults to the value of `group`.
@@ -54,6 +60,8 @@ define sftp_jail::jail (
   Sftp_jail::File_name $jail_name            = $name,
   Sftp_jail::User_name $user                 = $name,
   Sftp_jail::User_name $group                = $user,
+  Sftp_jail::Sub_dirs  $sub_dirs             = $sftp_jail::sub_dirs,
+  Boolean              $merge_subdirs        = $sftp_jail::merge_subdirs,
   Sftp_jail::User_name $match_group          = $group,
   Enum['yes', 'no'] $password_authentication = $sftp_jail::password_authentication,
 ) {
@@ -66,7 +74,6 @@ define sftp_jail::jail (
     group  => 'root',
     mode   => '0755',
   }
-
   file { "${jail_base}/incoming":
     ensure => 'directory',
     owner  => $user,
@@ -75,8 +82,10 @@ define sftp_jail::jail (
   }
 
   sftp_jail::user { $user:
-    jail  => $jail_base,
-    group => $group,
+    jail          => $jail_base,
+    group         => $group,
+    sub_dirs      => $sub_dirs,
+    merge_subdirs => $merge_subdirs,
   }
 
   ssh::server::match_block { $match_group:

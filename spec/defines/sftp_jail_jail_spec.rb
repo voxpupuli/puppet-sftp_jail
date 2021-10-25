@@ -13,7 +13,8 @@ describe 'sftp_jail::jail' do
         {
           user: 'bob',
           group: 'bob',
-          match_group: 'sftpuser'
+          match_group: 'sftpuser',
+          sub_dirs: ['a', 'a/b']
         }
       end
       let :title do
@@ -45,6 +46,18 @@ describe 'sftp_jail::jail' do
                                                                   'owner'  => 'bob',
                                                                   'group'  => 'bob',
                                                                   'mode'   => '0755')
+      end
+      it 'manages a users sub directories directory' do
+        is_expected.to contain_file('/chroot/test/home/bob/a').with('ensure' => 'directory',
+                                                                    'owner'  => 'bob',
+                                                                    'group'  => 'bob',
+                                                                    'mode'   => '0755')
+      end
+      it 'manages a users nested sub directories directory' do
+        is_expected.to contain_file('/chroot/test/home/bob/a/b').with('ensure' => 'directory',
+                                                                      'owner'  => 'bob',
+                                                                      'group'  => 'bob',
+                                                                      'mode'   => '0755')
       end
       it 'adds an ssh server entry for the user' do
         is_expected.to contain_ssh__server__match_block('sftpuser').with('type' => 'Group',
