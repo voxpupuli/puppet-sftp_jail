@@ -29,10 +29,28 @@ Manage SFTP Jails
 
 The following parameters are available in the `sftp_jail` class:
 
+* [`jails`](#jails)
+* [`users`](#users)
 * [`chroot_base`](#chroot_base)
 * [`sub_dirs`](#sub_dirs)
 * [`merge_subdirs`](#merge_subdirs)
 * [`password_authentication`](#password_authentication)
+
+##### <a name="jails"></a>`jails`
+
+Data type: `Hash[String[1],Hash]`
+
+Jails to create. See `sftp_jail::jail` for more details.
+
+Default value: `{}`
+
+##### <a name="users"></a>`users`
+
+Data type: `Hash[String[1],Hash]`
+
+Users to create. See `sftp_jail::user` for more details.
+
+Default value: `{}`
 
 ##### <a name="chroot_base"></a>`chroot_base`
 
