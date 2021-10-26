@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v4.1.0](https://github.com/voxpupuli/puppet-sftp_jail/tree/v4.1.0) (2021-10-26)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-sftp_jail/compare/v4.0.0...v4.1.0)
+
+**Implemented enhancements:**
+
+- accept jails and users as class parameters [\#91](https://github.com/voxpupuli/puppet-sftp_jail/pull/91) ([nod0n](https://github.com/nod0n))
+- create sub directories in user homes [\#71](https://github.com/voxpupuli/puppet-sftp_jail/pull/71) ([nod0n](https://github.com/nod0n))
+
 ## [v4.0.0](https://github.com/voxpupuli/puppet-sftp_jail/tree/v4.0.0) (2021-09-17)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-sftp_jail/compare/v3.0.0...v4.0.0)
