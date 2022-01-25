@@ -2,7 +2,7 @@
 
 require 'spec_helper_acceptance'
 
-describe 'basic and shared SFTP jails' do
+describe 'basic and shared SFTP jails', order: :defined do
   it 'sets up the defaults' do
     pp = <<~EOS
             class {'ssh': } ->
