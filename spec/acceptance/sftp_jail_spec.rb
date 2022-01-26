@@ -139,8 +139,8 @@ describe 'basic and shared SFTP jails', order: :defined do
       and be_owned_by 'bob'
   end
 
-  context 'fist single user jail' do
-    it 'performs normal file upload to single user jail' do
+  context 'first single user jail' do
+    it 'uploads a file' do
       shell('(echo progress; echo "cd /incoming"; echo "put /etc/passwd"; echo quit)|sftp -o StrictHostKeyChecking=no -b - alice@localhost',
             acceptable_exit_codes: 0)
     end
@@ -152,7 +152,7 @@ describe 'basic and shared SFTP jails', order: :defined do
   end
 
   context 'second single user jail' do
-    it 'uploads file to second single jail' do
+    it 'uploads a file' do
       shell('(echo progress; echo "cd /incoming"; echo "put /etc/passwd"; echo quit)|sftp -o StrictHostKeyChecking=no -b - bob@localhost',
             acceptable_exit_codes: 0)
     end
@@ -163,7 +163,7 @@ describe 'basic and shared SFTP jails', order: :defined do
     end
 
     context 'sub directory' do
-      it 'uploads file a sub directory' do
+      it 'uploads a file' do
         shell('(echo progress; echo "cd /home/bob/a/b"; echo "put /etc/passwd"; echo quit)|sftp -o StrictHostKeyChecking=no -b - bob@localhost',
               acceptable_exit_codes: 0)
       end
@@ -174,54 +174,70 @@ describe 'basic and shared SFTP jails', order: :defined do
       end
     end
 
-    it 'uploads file to invalid location' do
-      shell('(echo progress; echo "cd /tmp"; echo "put /etc/passwd"; echo quit)|sftp -o StrictHostKeyChecking=no -b - bob@localhost',
-            acceptable_exit_codes: 1)
-    end
+    context 'attempt to escape jail' do
+      it 'attempts to upload a file to an invalid location' do
+        shell('(echo progress; echo "cd /tmp"; echo "put /etc/passwd"; echo quit)|sftp -o StrictHostKeyChecking=no -b - bob@localhost',
+              acceptable_exit_codes: 1)
+      end
 
-    describe file('/tmp/passwd') do
-      it { is_expected.not_to exist }
+      describe file('/tmp/passwd') do
+        it { is_expected.not_to exist }
+      end
     end
   end
 
   context 'shared jail' do
-    it 'uploads file to first shared jail' do
-      shell('(echo progress; echo "cd /incoming"; echo "put /etc/passwd"; echo quit)|sftp -o StrictHostKeyChecking=no -b - carol@localhost',
-            acceptable_exit_codes: 0)
+    context 'as user with read/write permissions' do
+      it 'uploads a file' do
+        shell('(echo progress; echo "cd /incoming"; echo "put /etc/passwd"; echo quit)|sftp -o StrictHostKeyChecking=no -b - carol@localhost',
+              acceptable_exit_codes: 0)
+      end
+
+      describe file('/chroot/shared1/incoming/passwd') do
+        it { is_expected.to be_file }
+        it { is_expected.to be_owned_by 'carol' }
+      end
+
+      it 'pulls the file' do
+        shell('(echo progress; echo "cd /incoming"; echo "get passwd"; echo quit)|sftp -o StrictHostKeyChecking=no -b - carol@localhost',
+              acceptable_exit_codes: 0)
+      end
     end
 
-    describe file('/chroot/shared1/incoming/passwd') do
-      it { is_expected.to be_file }
-      it { is_expected.to be_owned_by 'carol' }
+    context 'as user with read only permissions' do
+      it 'pulls the file' do
+        shell('(echo progress; echo "cd /incoming"; echo "get passwd"; echo quit)|sftp -o StrictHostKeyChecking=no -b - dave@localhost',
+              acceptable_exit_codes: 0)
+      end
+
+      it 'attempts to delete the file' do
+        shell('su -  dave -c "rm -f /chroot/shared1/incoming/passwd"',
+              acceptable_exit_codes: 1)
+      end
     end
 
-    it 'pulls file from first shared jail as write user' do
-      shell('(echo progress; echo "cd /incoming"; echo "get passwd"; echo quit)|sftp -o StrictHostKeyChecking=no -b - carol@localhost',
-            acceptable_exit_codes: 0)
-    end
+    context 'attempt to escape jail' do
+      context 'as user with read/write permissions' do
+        it 'attempts to upload a file to an invalid location' do
+          shell('(echo progress; echo "cd /tmp"; echo "put /etc/passwd"; echo quit)|sftp -o StrictHostKeyChecking=no -b - carol@localhost',
+                acceptable_exit_codes: 1)
+        end
 
-    it 'pulls file from first shared jail as read user' do
-      shell('(echo progress; echo "cd /incoming"; echo "get passwd"; echo quit)|sftp -o StrictHostKeyChecking=no -b - dave@localhost',
-            acceptable_exit_codes: 0)
-    end
+        describe file('/tmp/passwd') do
+          it { is_expected.not_to exist }
+        end
+      end
 
-    it 'attempts to delete file without group write permission' do
-      shell('su -  dave -c "rm -f /chroot/shared1/incoming/passwd"',
-            acceptable_exit_codes: 1)
-    end
+      context 'as user with read only permissions' do
+        it 'attempts to upload a file to an invalid location' do
+          shell('(echo progress; echo "cd /tmp"; echo "put /etc/passwd"; echo quit)|sftp -o StrictHostKeyChecking=no -b - dave@localhost',
+                acceptable_exit_codes: 1)
+        end
 
-    it 'attempts to escape shared jail as write user' do
-      shell('(echo progress; echo "cd /tmp"; echo "put /etc/passwd"; echo quit)|sftp -o StrictHostKeyChecking=no -b - carol@localhost',
-            acceptable_exit_codes: 1)
-    end
-
-    it 'attempts to esacape shared jail as read-only user' do
-      shell('(echo progress; echo "cd /tmp"; echo "put /etc/passwd"; echo quit)|sftp -o StrictHostKeyChecking=no -b - dave@localhost',
-            acceptable_exit_codes: 1)
-    end
-
-    describe file('/tmp/passwd') do
-      it { is_expected.not_to exist }
+        describe file('/tmp/passwd') do
+          it { is_expected.not_to exist }
+        end
+      end
     end
   end
 end
