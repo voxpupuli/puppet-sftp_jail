@@ -150,6 +150,11 @@ describe 'basic and shared SFTP jails', order: :defined do
         to be_file.
         and be_owned_by 'alice'
     end
+
+    it 'pulls the file' do
+      shell('(echo progress; echo "cd /incoming"; echo "get passwd"; echo quit)|sftp -o StrictHostKeyChecking=no -b - alice@localhost',
+            acceptable_exit_codes: 0)
+    end
   end
 
   context 'second single user jail' do
@@ -164,6 +169,11 @@ describe 'basic and shared SFTP jails', order: :defined do
         and be_owned_by 'bob'
     end
 
+    it 'pulls the file' do
+      shell('(echo progress; echo "cd /incoming"; echo "get passwd"; echo quit)|sftp -o StrictHostKeyChecking=no -b - bob@localhost',
+            acceptable_exit_codes: 0)
+    end
+
     context 'sub directory' do
       it 'uploads a file' do
         shell('(echo progress; echo "cd /home/bob/a/b"; echo "put /etc/passwd"; echo quit)|sftp -o StrictHostKeyChecking=no -b - bob@localhost',
@@ -174,6 +184,11 @@ describe 'basic and shared SFTP jails', order: :defined do
         expect(file('/chroot/test2/home/bob/a/b/passwd')).
           to be_file.
           and be_owned_by 'bob'
+      end
+
+      it 'pulls the file from a sub directory' do
+        shell('(echo progress; echo "cd /home/bob/a/b"; echo "get passwd"; echo quit)|sftp -o StrictHostKeyChecking=no -b - bob@localhost',
+              acceptable_exit_codes: 0)
       end
     end
 
