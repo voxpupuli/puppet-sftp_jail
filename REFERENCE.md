@@ -10,14 +10,14 @@
 
 ### Defined types
 
-* [`sftp_jail::jail`](#sftp_jailjail): One SFTP Jail where users get "chrooted" into
-* [`sftp_jail::user`](#sftp_jailuser): Adds a user's home directory to an SFTP jail.
+* [`sftp_jail::jail`](#sftp_jail--jail): One SFTP Jail where users get "chrooted" into
+* [`sftp_jail::user`](#sftp_jail--user): Adds a user's home directory to an SFTP jail.
 
 ### Data types
 
-* [`Sftp_jail::File_name`](#sftp_jailfile_name): The name of a file. Not a full path!
-* [`Sftp_jail::Sub_dirs`](#sftp_jailsub_dirs): A list of subdirectories
-* [`Sftp_jail::User_name`](#sftp_jailuser_name): Each user or group should have a unique alphanumeric name.
+* [`Sftp_jail::File_name`](#Sftp_jail--File_name): The name of a file. Not a full path!
+* [`Sftp_jail::Sub_dirs`](#Sftp_jail--Sub_dirs): A list of subdirectories
+* [`Sftp_jail::User_name`](#Sftp_jail--User_name): Each user or group should have a unique alphanumeric name.
 
 ## Classes
 
@@ -29,14 +29,14 @@ Manage SFTP Jails
 
 The following parameters are available in the `sftp_jail` class:
 
-* [`jails`](#jails)
-* [`users`](#users)
-* [`chroot_base`](#chroot_base)
-* [`sub_dirs`](#sub_dirs)
-* [`merge_subdirs`](#merge_subdirs)
-* [`password_authentication`](#password_authentication)
+* [`jails`](#-sftp_jail--jails)
+* [`users`](#-sftp_jail--users)
+* [`chroot_base`](#-sftp_jail--chroot_base)
+* [`sub_dirs`](#-sftp_jail--sub_dirs)
+* [`merge_subdirs`](#-sftp_jail--merge_subdirs)
+* [`password_authentication`](#-sftp_jail--password_authentication)
 
-##### <a name="jails"></a>`jails`
+##### <a name="-sftp_jail--jails"></a>`jails`
 
 Data type: `Hash[String[1],Hash]`
 
@@ -44,7 +44,7 @@ Jails to create. See `sftp_jail::jail` for more details.
 
 Default value: `{}`
 
-##### <a name="users"></a>`users`
+##### <a name="-sftp_jail--users"></a>`users`
 
 Data type: `Hash[String[1],Hash]`
 
@@ -52,7 +52,7 @@ Users to create. See `sftp_jail::user` for more details.
 
 Default value: `{}`
 
-##### <a name="chroot_base"></a>`chroot_base`
+##### <a name="-sftp_jail--chroot_base"></a>`chroot_base`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -60,7 +60,7 @@ All jails are located in this directory.
 
 Default value: `'/chroot'`
 
-##### <a name="sub_dirs"></a>`sub_dirs`
+##### <a name="-sftp_jail--sub_dirs"></a>`sub_dirs`
 
 Data type: `Sftp_jail::Sub_dirs`
 
@@ -72,16 +72,16 @@ see: `sftp_jail::merge_subdirs`
 
 Default value: `[]`
 
-##### <a name="merge_subdirs"></a>`merge_subdirs`
+##### <a name="-sftp_jail--merge_subdirs"></a>`merge_subdirs`
 
 Data type: `Boolean`
 
 Merge  each users list of subdirectories (`sftp_jail::user::sub_dirs`)
 with the default list of subdirectories (`sftp_jail::sub_dirs`)?
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="password_authentication"></a>`password_authentication`
+##### <a name="-sftp_jail--password_authentication"></a>`password_authentication`
 
 Data type: `Enum['yes', 'no']`
 
@@ -92,7 +92,7 @@ Default value: `'no'`
 
 ## Defined types
 
-### <a name="sftp_jailjail"></a>`sftp_jail::jail`
+### <a name="sftp_jail--jail"></a>`sftp_jail::jail`
 
 A jail can have one or multiple users. With multiple users, they can share
 some date via the `/incomming` directory.
@@ -137,15 +137,15 @@ sftp_jail::user { 'readuser':
 
 The following parameters are available in the `sftp_jail::jail` defined type:
 
-* [`jail_name`](#jail_name)
-* [`user`](#user)
-* [`group`](#group)
-* [`sub_dirs`](#sub_dirs)
-* [`merge_subdirs`](#merge_subdirs)
-* [`match_group`](#match_group)
-* [`password_authentication`](#password_authentication)
+* [`jail_name`](#-sftp_jail--jail--jail_name)
+* [`user`](#-sftp_jail--jail--user)
+* [`group`](#-sftp_jail--jail--group)
+* [`sub_dirs`](#-sftp_jail--jail--sub_dirs)
+* [`merge_subdirs`](#-sftp_jail--jail--merge_subdirs)
+* [`match_group`](#-sftp_jail--jail--match_group)
+* [`password_authentication`](#-sftp_jail--jail--password_authentication)
 
-##### <a name="jail_name"></a>`jail_name`
+##### <a name="-sftp_jail--jail--jail_name"></a>`jail_name`
 
 Data type: `Sftp_jail::File_name`
 
@@ -153,7 +153,7 @@ The jails name.
 
 Default value: `$name`
 
-##### <a name="user"></a>`user`
+##### <a name="-sftp_jail--jail--user"></a>`user`
 
 Data type: `Sftp_jail::User_name`
 
@@ -162,7 +162,7 @@ the user a place to land. Also sets user ownership for `/incoming`.
 
 Default value: `$name`
 
-##### <a name="group"></a>`group`
+##### <a name="-sftp_jail--jail--group"></a>`group`
 
 Data type: `Sftp_jail::User_name`
 
@@ -171,7 +171,7 @@ giving the user a place to land. Also sets group ownership for `/incoming`.
 
 Default value: `$user`
 
-##### <a name="sub_dirs"></a>`sub_dirs`
+##### <a name="-sftp_jail--jail--sub_dirs"></a>`sub_dirs`
 
 Data type: `Sftp_jail::Sub_dirs`
 
@@ -179,7 +179,7 @@ This directory structure is enforced in the users Home.
 
 Default value: `$sftp_jail::sub_dirs`
 
-##### <a name="merge_subdirs"></a>`merge_subdirs`
+##### <a name="-sftp_jail--jail--merge_subdirs"></a>`merge_subdirs`
 
 Data type: `Boolean`
 
@@ -187,7 +187,7 @@ Merge sub_dirs with the default sub_dirs?
 
 Default value: `$sftp_jail::merge_subdirs`
 
-##### <a name="match_group"></a>`match_group`
+##### <a name="-sftp_jail--jail--match_group"></a>`match_group`
 
 Data type: `Sftp_jail::User_name`
 
@@ -196,7 +196,7 @@ Useful for shared jails. Defaults to the value of `group`.
 
 Default value: `$group`
 
-##### <a name="password_authentication"></a>`password_authentication`
+##### <a name="-sftp_jail--jail--password_authentication"></a>`password_authentication`
 
 Data type: `Enum['yes', 'no']`
 
@@ -205,7 +205,7 @@ recommended and has to be configured outside of the scope of this module.
 
 Default value: `$sftp_jail::password_authentication`
 
-### <a name="sftp_jailuser"></a>`sftp_jail::user`
+### <a name="sftp_jail--user"></a>`sftp_jail::user`
 
 Used for shared jails to allow multiple users to write, or to allow one user
 to write and others to read-only.
@@ -233,20 +233,20 @@ sftp_jail::user{'bob':
 
 The following parameters are available in the `sftp_jail::user` defined type:
 
-* [`jail`](#jail)
-* [`user`](#user)
-* [`group`](#group)
-* [`sub_dirs`](#sub_dirs)
-* [`merge_subdirs`](#merge_subdirs)
+* [`jail`](#-sftp_jail--user--jail)
+* [`user`](#-sftp_jail--user--user)
+* [`group`](#-sftp_jail--user--group)
+* [`sub_dirs`](#-sftp_jail--user--sub_dirs)
+* [`merge_subdirs`](#-sftp_jail--user--merge_subdirs)
 
-##### <a name="jail"></a>`jail`
+##### <a name="-sftp_jail--user--jail"></a>`jail`
 
 Data type: `Stdlib::Absolutepath`
 
 The path of the jail's base directory, such as `/chroot/myjail`. Do not
 include a trailing slash.
 
-##### <a name="user"></a>`user`
+##### <a name="-sftp_jail--user--user"></a>`user`
 
 Data type: `Sftp_jail::User_name`
 
@@ -255,7 +255,7 @@ giving the user a place to land.
 
 Default value: `$name`
 
-##### <a name="group"></a>`group`
+##### <a name="-sftp_jail--user--group"></a>`group`
 
 Data type: `Sftp_jail::User_name`
 
@@ -263,7 +263,7 @@ The group that will own the corresponding home directory in the jail.
 
 Default value: `$user`
 
-##### <a name="sub_dirs"></a>`sub_dirs`
+##### <a name="-sftp_jail--user--sub_dirs"></a>`sub_dirs`
 
 Data type: `Sftp_jail::Sub_dirs`
 
@@ -271,7 +271,7 @@ This directory structure is enforced in the users Home.
 
 Default value: `$sftp_jail::sub_dirs`
 
-##### <a name="merge_subdirs"></a>`merge_subdirs`
+##### <a name="-sftp_jail--user--merge_subdirs"></a>`merge_subdirs`
 
 Data type: `Boolean`
 
@@ -281,17 +281,13 @@ Default value: `$sftp_jail::merge_subdirs`
 
 ## Data types
 
-### <a name="sftp_jailfile_name"></a>`Sftp_jail::File_name`
+### <a name="Sftp_jail--File_name"></a>`Sftp_jail::File_name`
 
 The name of a file. Not a full path!
 
-Alias of
+Alias of `Pattern[/\A[^\/\0]+\z/]`
 
-```puppet
-Pattern[/\A[^\/\0]+\z/]
-```
-
-### <a name="sftp_jailsub_dirs"></a>`Sftp_jail::Sub_dirs`
+### <a name="Sftp_jail--Sub_dirs"></a>`Sftp_jail::Sub_dirs`
 
 A list of subdirectories
 
@@ -303,13 +299,9 @@ A list of subdirectories
 As!8df/[1qwEr/zXcv0'
 ```
 
-Alias of
+Alias of `Array[Pattern[/\A([^\/\0]+\/*)*\z/]]`
 
-```puppet
-Array[Pattern[/\A([^\/\0]+\/*)*\z/]]
-```
-
-### <a name="sftp_jailuser_name"></a>`Sftp_jail::User_name`
+### <a name="Sftp_jail--User_name"></a>`Sftp_jail::User_name`
 
 From useradd(8): It is usually recommended to only use usernames
 that begin with a lower case letter or an underscore, followed by lower case
@@ -319,9 +311,5 @@ Usernames may only be up to 32 characters long.
 Many installations also allow capitals or periods, for example to separate
 first and last names.
 
-Alias of
-
-```puppet
-Pattern[/\A[a-zA-Z_]([a-zA-Z.0-9_-]{0,30}[a-zA-Z0-9_$-])?\z/]
-```
+Alias of `Pattern[/\A[a-zA-Z_]([a-zA-Z.0-9_-]{0,30}[a-zA-Z0-9_$-])?\z/]`
 
