@@ -6,6 +6,7 @@
 [![Puppet Forge - downloads](https://img.shields.io/puppetforge/dt/puppet/sftp_jail.svg)](https://forge.puppetlabs.com/puppet/sftp_jail)
 [![Puppet Forge - endorsement](https://img.shields.io/puppetforge/e/puppet/sftp_jail.svg)](https://forge.puppetlabs.com/puppet/sftp_jail)
 [![Puppet Forge - scores](https://img.shields.io/puppetforge/f/puppet/sftp_jail.svg)](https://forge.puppetlabs.com/puppet/sftp_jail)
+[![License](https://img.shields.io/github/license/voxpupuli/puppet-sftp_jail.svg)](https://github.com/voxpupuli/puppet-sftp_jail/blob/master/LICENSE)
 
 ## Overview
 
