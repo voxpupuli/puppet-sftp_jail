@@ -4,6 +4,33 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v5.0.0](https://github.com/voxpupuli/puppet-sftp_jail/tree/v5.0.0) (2025-03-07)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-sftp_jail/compare/v4.1.0...v5.0.0)
+
+**Breaking changes:**
+
+- Drop End of Life Redhat 7 and Centos 7/8 [\#123](https://github.com/voxpupuli/puppet-sftp_jail/pull/123) ([uoe-pjackson](https://github.com/uoe-pjackson))
+- Drop Debian 10 support [\#110](https://github.com/voxpupuli/puppet-sftp_jail/pull/110) ([zilchms](https://github.com/zilchms))
+- Drop Ubuntu 18.04 support [\#107](https://github.com/voxpupuli/puppet-sftp_jail/pull/107) ([zilchms](https://github.com/zilchms))
+- Drop Puppet 6 support [\#99](https://github.com/voxpupuli/puppet-sftp_jail/pull/99) ([bastelfreak](https://github.com/bastelfreak))
+
+**Implemented enhancements:**
+
+- Add Debian 12 support [\#112](https://github.com/voxpupuli/puppet-sftp_jail/pull/112) ([zilchms](https://github.com/zilchms))
+- Add RHEL 8 and 9 support [\#111](https://github.com/voxpupuli/puppet-sftp_jail/pull/111) ([zilchms](https://github.com/zilchms))
+- saz/ssh: Allow 12.x [\#109](https://github.com/voxpupuli/puppet-sftp_jail/pull/109) ([zilchms](https://github.com/zilchms))
+- Add Ubuntu 22.04 support [\#108](https://github.com/voxpupuli/puppet-sftp_jail/pull/108) ([zilchms](https://github.com/zilchms))
+- saz/ssh: Allow 11.x [\#106](https://github.com/voxpupuli/puppet-sftp_jail/pull/106) ([zilchms](https://github.com/zilchms))
+- Add Puppet 8 support [\#102](https://github.com/voxpupuli/puppet-sftp_jail/pull/102) ([bastelfreak](https://github.com/bastelfreak))
+- puppetlabs/stdlib: Allow 9.x [\#101](https://github.com/voxpupuli/puppet-sftp_jail/pull/101) ([bastelfreak](https://github.com/bastelfreak))
+
+**Merged pull requests:**
+
+- Update Readme [\#113](https://github.com/voxpupuli/puppet-sftp_jail/pull/113) ([rwaffen](https://github.com/rwaffen))
+- restructure rspec and add sftp pull checks [\#95](https://github.com/voxpupuli/puppet-sftp_jail/pull/95) ([nod0n](https://github.com/nod0n))
+- puppet-lint: Enable parameter\_types check [\#94](https://github.com/voxpupuli/puppet-sftp_jail/pull/94) ([bastelfreak](https://github.com/bastelfreak))
+
 ## [v4.1.0](https://github.com/voxpupuli/puppet-sftp_jail/tree/v4.1.0) (2021-10-26)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-sftp_jail/compare/v4.0.0...v4.1.0)
