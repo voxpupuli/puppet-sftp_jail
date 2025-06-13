@@ -4,6 +4,7 @@
 source ENV['GEM_SOURCE'] || 'https://rubygems.org'
 
 group :test do
+  gem 'puppet_fixtures', github: 'TheMeier/puppet_fixtures', branch: 'include_repo_openvox'
   gem 'voxpupuli-test', '~> 11.0',  :require => false
   gem 'puppet_metadata', '~> 5.0',  :require => false
 end
