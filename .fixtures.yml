@@ -1,8 +1,7 @@
+---
 fixtures:
   repositories:
-    ssh: "https://github.com/saz/puppet-ssh.git"
-    stdlib: "https://github.com/puppetlabs/puppetlabs-stdlib.git"
-    concat: "https://github.com/puppetlabs/puppetlabs-concat.git"
-    sshkeys_core:
-      repo: https://github.com/puppetlabs/puppetlabs-sshkeys_core.git
-      puppet_version: ">= 6.0.0"
+    concat: https://github.com/puppetlabs/puppetlabs-concat.git
+    ssh: https://github.com/saz/puppet-ssh.git
+    sshkeys_core: https://github.com/puppetlabs/puppetlabs-sshkeys_core.git
+    stdlib: https://github.com/puppetlabs/puppetlabs-stdlib.git
