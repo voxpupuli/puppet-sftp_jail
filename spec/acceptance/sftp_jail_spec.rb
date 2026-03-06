@@ -104,39 +104,27 @@ describe 'basic and shared SFTP jails', order: :defined do
   end
 
   specify do
-    expect(file('/chroot/test1')).
-      to be_directory.
-      and be_owned_by 'root'
+    expect(file('/chroot/test1')).to be_directory.and be_owned_by 'root'
   end
 
   specify do
-    expect(file('/chroot/test1/incoming')).
-      to be_directory.
-      and be_owned_by 'alice'
+    expect(file('/chroot/test1/incoming')).to be_directory.and be_owned_by 'alice'
   end
 
   specify do
-    expect(file('/chroot/test1/home')).
-      to be_directory.
-      and be_owned_by 'root'
+    expect(file('/chroot/test1/home')).to be_directory.and be_owned_by 'root'
   end
 
   specify do
-    expect(file('/chroot/test1/home/alice')).
-      to be_directory.
-      and be_owned_by 'alice'
+    expect(file('/chroot/test1/home/alice')).to be_directory.and be_owned_by 'alice'
   end
 
   specify do
-    expect(file('/chroot/test2/home/bob/a')).
-      to be_directory.
-      and be_owned_by 'bob'
+    expect(file('/chroot/test2/home/bob/a')).to be_directory.and be_owned_by 'bob'
   end
 
   specify do
-    expect(file('/chroot/test2/home/bob/a/b')).
-      to be_directory.
-      and be_owned_by 'bob'
+    expect(file('/chroot/test2/home/bob/a/b')).to be_directory.and be_owned_by 'bob'
   end
 
   context 'first single user jail' do
@@ -146,9 +134,7 @@ describe 'basic and shared SFTP jails', order: :defined do
     end
 
     specify do
-      expect(file('/chroot/test1/incoming/passwd')).
-        to be_file.
-        and be_owned_by 'alice'
+      expect(file('/chroot/test1/incoming/passwd')).to be_file.and be_owned_by 'alice'
     end
 
     it 'pulls the file' do
@@ -164,9 +150,7 @@ describe 'basic and shared SFTP jails', order: :defined do
     end
 
     specify do
-      expect(file('/chroot/test2/incoming/passwd')).
-        to be_file.
-        and be_owned_by 'bob'
+      expect(file('/chroot/test2/incoming/passwd')).to be_file.and be_owned_by 'bob'
     end
 
     it 'pulls the file' do
@@ -181,9 +165,7 @@ describe 'basic and shared SFTP jails', order: :defined do
       end
 
       specify do
-        expect(file('/chroot/test2/home/bob/a/b/passwd')).
-          to be_file.
-          and be_owned_by 'bob'
+        expect(file('/chroot/test2/home/bob/a/b/passwd')).to be_file.and be_owned_by 'bob'
       end
 
       it 'pulls the file from a sub directory' do
@@ -210,9 +192,7 @@ describe 'basic and shared SFTP jails', order: :defined do
       end
 
       specify do
-        expect(file('/chroot/shared1/incoming/passwd')).
-          to be_file.
-          and be_owned_by 'carol'
+        expect(file('/chroot/shared1/incoming/passwd')).to be_file.and be_owned_by 'carol'
       end
 
       it 'pulls the file' do

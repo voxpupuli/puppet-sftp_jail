@@ -16,7 +16,7 @@ describe 'sftp_jail::jail' do
           user: 'bob',
           group: 'bob',
           match_group: 'sftpuser',
-          sub_dirs: ['a', 'a/b']
+          sub_dirs: ['a', 'a/b'],
         }
       end
       let :title do
@@ -75,7 +75,7 @@ describe 'sftp_jail::jail' do
                                                                            'ForceCommand' => 'internal-sftp',
                                                                            'PasswordAuthentication' => 'no',
                                                                            'AllowTcpForwarding' => 'no',
-                                                                           'X11Forwarding' => 'no'
+                                                                           'X11Forwarding' => 'no',
                                                                          })
       end
     end
@@ -91,7 +91,7 @@ describe 'sftp_jail::jail' do
         {
           user: 'alice',
           group: 'alice',
-          password_authentication: 'yes'
+          password_authentication: 'yes',
         }
       end
       let :title do
@@ -106,8 +106,8 @@ describe 'sftp_jail::jail' do
             'ForceCommand' => 'internal-sftp',
             'PasswordAuthentication' => 'yes',
             'AllowTcpForwarding' => 'no',
-            'X11Forwarding' => 'no'
-          }
+            'X11Forwarding' => 'no',
+          },
         )
       end
     end
