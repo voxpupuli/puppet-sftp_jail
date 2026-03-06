@@ -12,7 +12,7 @@ describe 'sftp_jail::user' do
   let :params do
     {
       jail: '/chroot/testjail',
-      sub_dirs: ['a', 'a/b']
+      sub_dirs: ['a', 'a/b'],
     }
   end
 
