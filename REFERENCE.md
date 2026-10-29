@@ -312,4 +312,3 @@ Many installations also allow capitals or periods, for example to separate
 first and last names.
 
 Alias of `Pattern[/\A[a-zA-Z_]([a-zA-Z.0-9_-]{0,30}[a-zA-Z0-9_$-])?\z/]`
-
